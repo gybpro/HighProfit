@@ -54,11 +54,34 @@
         </dependency>
 
         <!--zookeeper-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-dependencies-zookeeper</artifactId>
+            &lt;!&ndash;type是与依赖的packaging对应的，通常默认为jar，不一致时需要指定&ndash;&gt;
+            <type>pom</type>
+        </dependency>-->
+        <!--新版zookeeper依赖，新版jdk需要新版zookeeper-->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-x-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
             <!--type是与依赖的packaging对应的，通常默认为jar，不一致时需要指定-->
             <type>pom</type>
+            <!--排除使用zookeeper的slf4j-log4j日志，避免与spring的log4j2日志发生冲突-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!--公共工程-->

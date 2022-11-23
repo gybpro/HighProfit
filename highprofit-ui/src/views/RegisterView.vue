@@ -6,7 +6,7 @@
     <div class="login-content">
       <div class="login-flex">
         <div class="login-left">
-          <p>万民用户知心托付&nbsp;&nbsp;&nbsp;&nbsp;<span>{{ rate }}%</span>历史年化收益</p>
+          <p>万民用户知心托付&nbsp;&nbsp;&nbsp;&nbsp;<span><Rate/></span>历史年化收益</p>
           <p>千万级技术研发投入&nbsp;&nbsp;&nbsp;&nbsp;亿级注册资本平台 </p>
         </div>
         <!---->
@@ -49,10 +49,11 @@
 <script>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Rate from "@/components/Rate";
 
 export default {
   name: "RegisterView",
-  components: {Header, Footer}
+  components: { Header, Footer, Rate}
 }
 </script>
 

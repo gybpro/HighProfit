@@ -3,7 +3,7 @@
     <div class="public-head-nav">
       <div class="public-head-left">
         <h1 class="public-head-logo"><a href="javascript:;">
-          <img src="public/image/logo.png" alt="">
+          <img src="../../public/image/logo.png" alt="">
         </a></h1>
         <ul class="public-head-list">
           <li><a href="index.html" target="_blank">主页</a></li>
