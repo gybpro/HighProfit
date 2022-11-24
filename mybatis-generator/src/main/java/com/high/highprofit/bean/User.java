@@ -2,7 +2,7 @@ package com.high.highprofit.bean;
 
 import java.util.Date;
 
-public class SysUser {
+public class User {
     private Integer id;
 
     private String phone;
