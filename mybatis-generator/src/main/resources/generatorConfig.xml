@@ -84,7 +84,7 @@
                selectByExampleQueryId="false"/>
 
 
-        <table tableName="u_user" domainObjectName="SysUser"
+        <table tableName="u_user" domainObjectName="User"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
