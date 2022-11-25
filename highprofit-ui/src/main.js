@@ -6,8 +6,8 @@ import router from './router'
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-// Global axios defaults：全局默认设置
-// axios.defaults.baseURL = 'http://127.0.0.1';
+// Global axios defaults：全局默认设置，axios的默认根路径
+axios.defaults.baseURL = 'http://127.0.0.1:8081';
 
 Vue.use(VueAxios, axios);
 
