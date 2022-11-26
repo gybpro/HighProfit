@@ -11,4 +11,6 @@ import com.high.highprofit.bean.User;
  */
 public interface UserService {
     int registerUser(User user);
+
+    boolean checkPhone(String phone);
 }

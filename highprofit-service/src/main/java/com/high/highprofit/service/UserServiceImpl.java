@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService{
     public int registerUser(User user) {
         return userMapper.insertUser(user);
     }
+
+    @Override
+    public boolean checkPhone(String phone) {
+        return userMapper.selectPhone(phone) < 1;
+    }
 }
