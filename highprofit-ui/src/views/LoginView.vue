@@ -1,27 +1,52 @@
 <template>
     <div>
-        <!--头部-->
+        <!--公共头部-->
         <Header/>
 
         <div class="login-content">
             <div class="login-flex">
                 <div class="login-left">
-                    <p>万民用户知心托付&nbsp;&nbsp;&nbsp;&nbsp;<Rate/>
+                    <h3>加入动力金融网</h3>
+                    <p>坐享
+                        <Rate/>
                         历史年化收益
                     </p>
-                    <p>千万级技术研发投入&nbsp;&nbsp;&nbsp;&nbsp;亿级注册资本平台 </p>
+                    <p>平台用户<span>100000+</span>位 </p>
+                    <p>累计成交金额<span>15000+</span>万元</p>
                 </div>
+                <!--登录栏-->
                 <div class="login-box">
-                    <h3 class="login-title">用户注册</h3>
-                    <form action="" id="register_Submit">
+                    <h3 class="login-title">
+                        <a href="javascript:" @click="isPwdLogin = true" :style="{color: isPwdLogin ? '#4fa5d9' : ''}">
+                            密码登录
+                        </a>
+                        <span :style="{color: '#c0c0c0'}">&nbsp; | &nbsp;</span>
+                        <a href="javascript:" @click="isPwdLogin = false"
+                           :style="{color: !isPwdLogin ? '#4fa5d9' : ''}">
+                            短信登录
+                        </a>
+                    </h3>
+                    <!--密码登录-->
+                    <div v-if="isPwdLogin">
                         <div class="alert-input">
                             <input v-model="phone" type="text" @blur="checkPhone" @focus="phoneErr = ''"
-                                   class="form-border user-num" name="phone" placeholder="请输入11位手机号">
+                                   class="form-border user-num" name="phone" placeholder="请输入手机号">
                             <p class="prompt_num">{{ phoneErr }}</p>
                             <input v-model="password" type="password" @blur="checkPwd" @focus="passwordErr = ''"
-                                   placeholder="请输入6-20位英文和数字混合密码" class="form-border user-pass"
+                                   placeholder="请输入登录密码" class="form-border user-pass"
                                    autocomplete name="password">
                             <p class="prompt_pass">{{ passwordErr }}</p>
+                        </div>
+                        <div class="alert-input-btn">
+                            <input type="button" @click="pwdLogin" class="login-submit" value="登录">
+                        </div>
+                    </div>
+                    <!--验证码登录-->
+                    <div v-else>
+                        <div class="alert-input">
+                            <input v-model="phone" type="text" @blur="checkPhone" @focus="phoneErr = ''"
+                                   class="form-border user-num" name="phone" placeholder="请输入手机号">
+                            <p class="prompt_num">{{ phoneErr }}</p>
                             <div class="form-yzm form-border">
                                 <input v-model="code" class="yzm-write" type="text" name="code"
                                        placeholder="输入短信验证码">
@@ -30,18 +55,12 @@
                             </div>
                             <p class="prompt_yan" @focus="codeErr = ''">{{ codeErr }}</p>
                         </div>
-                        <div class="alert-input-agree">
-                            <input type="checkbox" v-model:checked="agree" class="fa fa-square-o"/>
-                            我已阅读并同意<a href="javascript:" target="_blank">《动力金融网注册服务协议》</a>
-                        </div>
                         <div class="alert-input-btn">
-                            <input type="button" @click="register" :disabled="!agree"
-                                   :style="agree ? '' : {'background':'rgba(254, 46, 85, 0.5)'}"
-                                   class="login-submit" value="注册">
+                            <input type="button" @click="codeLogin" class="login-submit" value="登录">
                         </div>
-                    </form>
+                    </div>
                     <div class="login-skip">
-                        已有账号？ <router-link to="/">登录</router-link>
+                        没有账号？ <router-link to="/register">注册</router-link>
                     </div>
                 </div>
             </div>
@@ -53,16 +72,16 @@
 </template>
 
 <script>
+import Rate from "@/components/Rate";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Rate from "@/components/Rate";
+import regExp from "@/utils/regExp";
 import Vue from "vue";
 import qs from "qs";
-import regExp from "@/utils/regExp"
 
 export default {
-    name: "RegisterView",
-    components: {Header, Footer, Rate},
+    name: "LoginView",
+    components: {Rate, Header, Footer},
     data() {
         return {
             phone: "",
@@ -73,10 +92,11 @@ export default {
             passwordErr: "",
             codeErr: "",
             realCode: "",
-            registered: false, // 手机号是否已注册
+            registered: true, // 手机号是否已注册
             sendText: "获取验证码",
             sendInterval: 60, // 短信发送间隔
-            cdFlag: false // 发送冷却标志
+            cdFlag: false, // 发送冷却标志
+            isPwdLogin: true
         }
     },
     methods: {
@@ -91,13 +111,13 @@ export default {
                 alert(this.phoneErr);
                 return;
             }
-            if (this.registered) {
-                this.phoneErr = "手机号码已被注册";
+            if (!this.registered) {
+                this.phoneErr = "手机号码尚未注册";
                 alert(this.phoneErr);
                 return;
             }
             this.cdFlag = true;
-            Vue.axios.get("sms/register/" + this.phone).then(json => {
+            Vue.axios.get("sms/login/" + this.phone).then(json => {
                 console.log(json.data);
                 this.realCode = json.data + "";
                 /* 倒计时: 参数1表示定时任务，参数2表示任务多久执行一次
@@ -115,47 +135,22 @@ export default {
                 }, 1000);
             });
         },
-        register() {
-            if (this.phone === "") {
-                this.phoneErr = "手机号码不能为空";
-                alert(this.phoneErr);
-                return;
+        pwdLogin() {
+            Vue.axios.get("/user/xxx").then(json => alert(json.data));
+            return;
+            if (this.phone && this.password) {
+                Vue.axios.post("/user/pwdLogin", `phone=${this.phone}&password=${this.password}`).then(json => {
+                    if (json.data.code === "1") {
+                        // 保存客户端标识
+                        // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
+                    } else {
+                        alert(json.data.message);
+                    }
+                });
             }
-            if (this.password === "") {
-                this.passwordErr = "密码不能为空";
-                alert(this.passwordErr);
-                return;
-            }
-            if (this.code === "") {
-                this.codeErr = "验证码不能为空";
-                alert(this.codeErr);
-                return;
-            }
-            if (this.phoneErr !== "") {
-                alert(this.phoneErr);
-                return;
-            }
-            if (this.passwordErr !== "") {
-                alert(this.passwordErr);
-                return;
-            }
-            if (this.code !== this.realCode) {
-                alert("验证码错误");
-                return;
-            }
-            let data = {
-                phone: this.phone,
-                password: this.password,
-                code: this.code
-            };
-            this.checkPhone();
-            this.checkPwd();
-            data = qs.stringify(data);
-            Vue.axios.post("user/register", data).then(json => {
-                if (json.data.code === "1") {
-                    alert("跳转到登录页面");
-                }
-            });
+        },
+        codeLogin() {
+
         },
         checkPhone() {
             if (this.phone) {
@@ -164,9 +159,9 @@ export default {
                 } else {
                     Vue.axios.get("/user/check/" + this.phone)
                             .then(json => {
-                                if (!json.data) {
-                                    this.phoneErr = "手机号码已被注册";
-                                    this.registered = true;
+                                if (json.data) {
+                                    this.phoneErr = "手机号码尚未注册";
+                                    this.registered = false;
                                 }
                             });
                 }
