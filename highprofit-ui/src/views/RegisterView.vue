@@ -25,10 +25,10 @@
                             <div class="form-yzm form-border">
                                 <input v-model="code" class="yzm-write" type="text" name="code"
                                        placeholder="输入短信验证码">
-                                <input class="yzm-send" @click="sendCode" type="text" value="获取验证码" id="yzmBtn"
-                                       readonly="readonly">
+                                <input class="yzm-send" @click="sendCode" type="text" :value="sendText" id="yzmBtn"
+                                       :disabled="cdFlag" :style="{color: cdFlag ? '#c0c0c0' : ''}" readonly="readonly">
                             </div>
-                            <p class="prompt_yan">{{ codeErr }}</p>
+                            <p class="prompt_yan" @focus="codeErr = ''">{{ codeErr }}</p>
                         </div>
                         <div class="alert-input-agree">
                             <input type="checkbox" v-model:checked="agree" class="fa fa-square-o"/>
@@ -41,7 +41,7 @@
                         </div>
                     </form>
                     <div class="login-skip">
-                        已有账号？ <a href="" target="_blank">登录</a>
+                        已有账号？ <router-link to="/login">登录</router-link>
                     </div>
                 </div>
             </div>
@@ -72,27 +72,62 @@ export default {
             phoneErr: "",
             passwordErr: "",
             codeErr: "",
-            realCode: ""
+            realCode: "",
+            registered: false, // 手机号是否已注册
+            sendText: "获取验证码",
+            sendInterval: 60, // 短信发送间隔
+            cdFlag: false, // 发送冷却标志
         }
     },
     methods: {
         sendCode() {
+            if (this.phone === "") {
+                this.phoneErr = "手机号码不能为空";
+                alert(this.phoneErr);
+                return;
+            }
+            if (!regExp.phone.test(this.phone)) {
+                this.phoneErr = "手机号码格式不正确";
+                alert(this.phoneErr);
+                return;
+            }
+            if (this.registered) {
+                alert(this.phoneErr);
+                return;
+            }
+            this.cdFlag = true;
             Vue.axios.get("sms/register/" + this.phone).then(json => {
                 console.log(json.data);
                 this.realCode = json.data + "";
+                /* 倒计时: 参数1表示定时任务，参数2表示任务多久执行一次
+                setTimeout: 只执行一次
+                setInterval: 多次执行
+                 */
+                let interval = this.sendInterval;
+                let flag = setInterval(() => {
+                    this.sendText = --interval + "s后重试";
+                    if (interval === 0) {
+                        clearInterval(flag);
+                        this.sendText = "获取验证码";
+                        this.cdFlag = false;
+                    }
+                }, 1000);
             });
         },
         register() {
             if (this.phone === "") {
-                alert("手机号码不能为空");
+                this.phoneErr = "手机号码不能为空";
+                alert(this.phoneErr);
                 return;
             }
             if (this.password === "") {
-                alert("密码不能为空");
+                this.passwordErr = "密码不能为空";
+                alert(this.passwordErr);
                 return;
             }
             if (this.code === "") {
-                alert("验证码不能为空");
+                this.codeErr = "验证码不能为空";
+                alert(this.codeErr);
                 return;
             }
             let data = {
@@ -134,6 +169,7 @@ export default {
                             .then(json => {
                                 if (!json.data) {
                                     this.phoneErr = "手机号码已被注册";
+                                    this.registered = true;
                                 }
                             });
                 }
