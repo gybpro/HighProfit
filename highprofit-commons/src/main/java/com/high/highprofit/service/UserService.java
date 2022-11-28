@@ -13,4 +13,6 @@ public interface UserService {
     int registerUser(User user);
 
     boolean checkPhone(String phone);
+
+    User login(String phone, String password);
 }

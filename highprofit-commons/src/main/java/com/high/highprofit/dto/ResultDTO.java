@@ -12,15 +12,15 @@ public class ResultDTO {
 
     private String message;
 
-    private Object data;
+    private Object result;
 
     public ResultDTO() {
     }
 
-    public ResultDTO(String code, String message, Object data) {
+    public ResultDTO(String code, String message, Object result) {
         this.code = code;
         this.message = message;
-        this.data = data;
+        this.result = result;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ResultDTO {
         return "ResultDTO{" +
                 "code='" + code + '\'' +
                 ", message='" + message + '\'' +
-                ", data=" + data +
+                ", data=" + result +
                 '}';
     }
 
@@ -48,11 +48,11 @@ public class ResultDTO {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
+    public Object getResult() {
+        return result;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setResult(Object result) {
+        this.result = result;
     }
 }

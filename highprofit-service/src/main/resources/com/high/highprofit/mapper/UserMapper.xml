@@ -138,4 +138,11 @@
         from u_user
         where phone = #{phone}
     </select>
+
+    <select id="selectUserByPhoneAndPwd" parameterType="string" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from u_user
+        where phone = #{phone}
+        and login_password = #{password}
+    </select>
 </mapper>

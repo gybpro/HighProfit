@@ -18,4 +18,6 @@ public interface UserMapper {
     int insertUser(User user);
 
     int selectPhone(String phone);
+
+    User selectUserByPhoneAndPwd(String phone, String password);
 }

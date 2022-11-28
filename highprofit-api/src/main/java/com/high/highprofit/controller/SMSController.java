@@ -37,13 +37,24 @@ public class SMSController {
     @ResponseBody
     @CrossOrigin
     public String register(@PathVariable String phone) throws Exception {
+        return sendCode("register", phone);
+    }
+
+    @GetMapping("/login/{phone}")
+    @ResponseBody
+    @CrossOrigin
+    public String login(@PathVariable String phone) throws Exception {
+        return sendCode("login", phone);
+    }
+
+    private String sendCode(String actionName, String phone) {
         // 随机生成4为验证码
         StringBuilder code = new StringBuilder();
         for (int i = 0; i < 4; i++) {
             code.append((int) (Math.random() * 10));
         }
 
-        redisTemplate.opsForValue().set("code:register:" + phone, code, 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("code:" + actionName + ":" + phone, code, 5, TimeUnit.MINUTES);
 
         /* 阿里短信验证码测试
         Config config = new Config()

@@ -136,13 +136,17 @@ export default {
             });
         },
         pwdLogin() {
-            Vue.axios.get("/user/xxx").then(json => alert(json.data));
-            return;
             if (this.phone && this.password) {
                 Vue.axios.post("/user/pwdLogin", `phone=${this.phone}&password=${this.password}`).then(json => {
                     if (json.data.code === "1") {
                         // 保存客户端标识
                         // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
+                        let user = json.data.result;
+                        if (user.name && user.idCard) {
+                            this.$router.push("/index");
+                        } else {
+                            this.$router.push("/auth");
+                        }
                     } else {
                         alert(json.data.message);
                     }
