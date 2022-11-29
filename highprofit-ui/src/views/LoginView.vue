@@ -160,9 +160,9 @@ export default {
                 alert(this.phoneErr);
                 return;
             }
-            if (this.password === "") {
-                this.passwordErr = "密码不能为空";
-                alert(this.passwordErr);
+            if (this.code === "") {
+                this.codeErr = "密码不能为空";
+                alert(this.codeErr);
                 return;
             }
             if (this.phoneErr !== "") {
@@ -181,6 +181,7 @@ export default {
                     if (user.name && user.idCard) {
                         this.$router.push("/");
                     } else {
+                        alert("您尚未实名认证，正在为您跳转实名认证页面")
                         this.$router.push("/verify");
                     }
                 } else {

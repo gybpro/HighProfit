@@ -153,7 +153,8 @@ export default {
             data = qs.stringify(data);
             Vue.axios.post("user/register", data).then(json => {
                 if (json.data.code === "1") {
-                    this.$router.push("/login")
+                    alert("注册成功，请前往登录");
+                    this.$router.push("/login");
                 }
             });
         },
