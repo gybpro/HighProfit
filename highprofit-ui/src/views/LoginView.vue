@@ -60,7 +60,8 @@
                         </div>
                     </div>
                     <div class="login-skip">
-                        没有账号？ <router-link to="/register">注册</router-link>
+                        没有账号？
+                        <router-link to="/register">注册</router-link>
                     </div>
                 </div>
             </div>
@@ -141,7 +142,7 @@ export default {
                     if (json.data.code === "1") {
                         // 保存客户端标识
                         // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
-                        let user = json.data.result;
+                        let user = json.data.result.user;
                         if (user.name && user.idCard) {
                             this.$router.push("/");
                         } else {
@@ -154,22 +155,38 @@ export default {
             }
         },
         codeLogin() {
-            if (this.phone && this.code) {
-                Vue.axios.post("/user/codeLogin", `phone=${this.phone}&code=${this.code}`).then(json => {
-                    if (json.data.code === "1") {
-                        // 保存客户端标识
-                        // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
-                        let user = json.data.result;
-                        if (user.name && user.idCard) {
-                            this.$router.push("/");
-                        } else {
-                            this.$router.push("/verify");
-                        }
-                    } else {
-                        alert(json.data.message);
-                    }
-                });
+            if (this.phone === "") {
+                this.phoneErr = "手机号码不能为空";
+                alert(this.phoneErr);
+                return;
             }
+            if (this.password === "") {
+                this.passwordErr = "密码不能为空";
+                alert(this.passwordErr);
+                return;
+            }
+            if (this.phoneErr !== "") {
+                alert(this.phoneErr);
+                return;
+            }
+            if (this.passwordErr !== "") {
+                alert(this.passwordErr);
+                return;
+            }
+            Vue.axios.post("/user/codeLogin", `phone=${this.phone}&code=${this.code}`).then(json => {
+                if (json.data.code === "1") {
+                    // 保存客户端标识
+                    // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
+                    let user = json.data.result.user;
+                    if (user.name && user.idCard) {
+                        this.$router.push("/");
+                    } else {
+                        this.$router.push("/verify");
+                    }
+                } else {
+                    alert(json.data.message);
+                }
+            });
         },
         checkPhone() {
             if (this.phone) {

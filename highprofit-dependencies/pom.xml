@@ -28,6 +28,9 @@
         <curator.version>5.4.0</curator.version>
         <zookeeper.version>3.8.0</zookeeper.version>
         <maven-plugin-annotations.version>3.7.0</maven-plugin-annotations.version>
+        <aliyun-dysmsapi20170525.version>2.0.22</aliyun-dysmsapi20170525.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <fastjson2.version>2.0.14</fastjson2.version>
     </properties>
 
     <dependencyManagement>
@@ -84,6 +87,24 @@
                 <artifactId>maven-plugin-annotations</artifactId>
                 <version>${maven-plugin-annotations.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <!--阿里短信验证码-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${aliyun-dysmsapi20170525.version}</version>
+            </dependency>
+            <!--httpclient-->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <!--fastjson-->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

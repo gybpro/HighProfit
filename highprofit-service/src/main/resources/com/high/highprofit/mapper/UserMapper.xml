@@ -147,4 +147,16 @@
             and login_password = #{password}
         </if>
     </select>
+
+    <update id="updateLastLoginTime">
+        update u_user
+        set last_login_time = #{lastLoginTime}
+        where id = #{id}
+    </update>
+
+    <update id="updateIdCardAndName">
+        update u_user
+        set id_card = #{idCard}, name = #{name}
+        where id = #{id}
+    </update>
 </mapper>

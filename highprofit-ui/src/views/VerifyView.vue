@@ -10,9 +10,9 @@
                     <h3 class="login-title">实名认证</h3>
                     <form action="" id="renZ_Submit">
                         <div class="alert-input">
-                            <input type="text" v-model="name" class="form-border user-name" name="name"
-                                   placeholder="请输入您的真实姓名">
-                            <p class="prompt_name"></p>
+                            <input type="text" v-model="name" @blur="checkName" @focus="nameErr = ''"
+                                   class="form-border user-name" name="name" placeholder="请输入您的真实姓名">
+                            <p class="prompt_name">{{ nameErr }}</p>
                             <input type="text" v-model="idCard" @blur="checkIdCard" @focus="idCardErr = ''"
                                    class="form-border user-sfz" name="sfz" placeholder="请输入15位或18位身份证号">
                             <p class="prompt_sfz">{{ idCardErr }}</p>
@@ -45,18 +45,46 @@ export default {
     data() {
         return {
             name: "",
+            nameErr: "",
             idCard: "",
             idCardErr: ""
         }
     },
     methods: {
         sendVerify() {
-            if (this.name && this.idCard) {
-                Vue.axios.get(`/user`)
+            if (this.name) {
+                this.name = "姓名不能为空";
+                alert(this.name);
+                return;
+            }
+            if (this.idCard) {
+                this.idCardErr = "身份证号码不能为空";
+                alert(this.idCardErr);
+                return;
+            }
+            if (this.idCardErr !== "") {
+                this.idCardErr = "身份证格式不正确";
+                alert(this.idCardErr);
+                return;
+            }
+            Vue.axios.post("/user/verify", `name=${this.name}&idCard=${this.idCard}`).then(json => {
+                if (json.data.code === "1") {
+                    this.$router.push("/");
+                } else {
+                    alert(json.data.message);
+                }
+            });
+        },
+        checkName() {
+            if (this.name) {
+                this.name = "姓名不能为空";
             }
         },
         checkIdCard() {
-            if (this.idCard && !regExp.idCard.test(this.idCard)) {
+            if (this.idCard) {
+                this.idCardErr = "身份证号码不能为空";
+            }
+            if (!regExp.idCard.test(this.idCard)) {
                 this.idCardErr = "身份证格式不正确";
             }
         }
