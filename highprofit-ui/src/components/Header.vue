@@ -21,7 +21,7 @@
                 </ul>
             </div>
             <div class="public-head-right">
-                <a href="/" target="_blank">登录</a>
+                <a href="/login" target="_blank">登录</a>
                 <a href="/register" target="_blank">注册</a>
             </div>
         </div>

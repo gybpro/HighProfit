@@ -66,6 +66,15 @@ public class UserController {
         return userService.checkPhone(phone);
     }
 
+    /* 前后端分离导致跨域无法共享同一个session，需要自己实现获取或nginx设为同域获取其他方法
+    这里自己实现一个session
+    @GetMapping("/xxx")
+    @ResponseBody
+    public String xxx(HttpSession session) {
+        session.setAttribute("user", "zs");
+        return "xxx";
+    } */
+
     @PostMapping("/pwdLogin")
     @ResponseBody
     public ResultDTO pwdLogin(String phone, String password) {
@@ -87,15 +96,6 @@ public class UserController {
         return resultDTO;
     }
 
-    /* 前后端分离导致跨域无法共享同一个session，需要自己实现获取或nginx设为同域获取其他方法
-    这里自己实现一个session
-    @GetMapping("/xxx")
-    @ResponseBody
-    public String xxx(HttpSession session) {
-        session.setAttribute("user", "zs");
-        return "xxx";
-    } */
-
     @PostMapping("/codeLogin")
     @ResponseBody
     public ResultDTO codeLogin(String phone, String code) {
@@ -105,7 +105,15 @@ public class UserController {
         Assert.isFlag(checkPhone(phone), "手机号码尚未注册");
 
         ResultDTO resultDTO = new ResultDTO();
-
+        User user = userService.login(phone, null);
+        if (user != null) {
+            resultDTO.setCode("1");
+            resultDTO.setMessage("登录成功");
+            resultDTO.setResult(user);
+        } else {
+            resultDTO.setCode("0");
+            resultDTO.setMessage("用户名或密码错误");
+        }
         return resultDTO;
     }
 

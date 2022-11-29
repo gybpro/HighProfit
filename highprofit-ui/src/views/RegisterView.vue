@@ -41,7 +41,7 @@
                         </div>
                     </form>
                     <div class="login-skip">
-                        已有账号？ <router-link to="/">登录</router-link>
+                        已有账号？ <router-link to="/login">登录</router-link>
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@ export default {
             data = qs.stringify(data);
             Vue.axios.post("user/register", data).then(json => {
                 if (json.data.code === "1") {
-                    alert("跳转到登录页面");
+                    this.$router.push("/login")
                 }
             });
         },

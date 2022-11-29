@@ -48,12 +48,12 @@
                                    class="form-border user-num" name="phone" placeholder="请输入手机号">
                             <p class="prompt_num">{{ phoneErr }}</p>
                             <div class="form-yzm form-border">
-                                <input v-model="code" class="yzm-write" type="text" name="code"
+                                <input v-model="code" @focus="codeErr = ''" class="yzm-write" type="text" name="code"
                                        placeholder="输入短信验证码">
                                 <input class="yzm-send" @click="sendCode" type="text" :value="sendText" id="yzmBtn"
                                        :disabled="cdFlag" :style="{color: cdFlag ? '#c0c0c0' : ''}" readonly="readonly">
                             </div>
-                            <p class="prompt_yan" @focus="codeErr = ''">{{ codeErr }}</p>
+                            <p class="prompt_yan">{{ codeErr }}</p>
                         </div>
                         <div class="alert-input-btn">
                             <input type="button" @click="codeLogin" class="login-submit" value="登录">
@@ -143,9 +143,9 @@ export default {
                         // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
                         let user = json.data.result;
                         if (user.name && user.idCard) {
-                            this.$router.push("/index");
+                            this.$router.push("/");
                         } else {
-                            this.$router.push("/auth");
+                            this.$router.push("/verify");
                         }
                     } else {
                         alert(json.data.message);
@@ -154,7 +154,22 @@ export default {
             }
         },
         codeLogin() {
-
+            if (this.phone && this.code) {
+                Vue.axios.post("/user/codeLogin", `phone=${this.phone}&code=${this.code}`).then(json => {
+                    if (json.data.code === "1") {
+                        // 保存客户端标识
+                        // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
+                        let user = json.data.result;
+                        if (user.name && user.idCard) {
+                            this.$router.push("/");
+                        } else {
+                            this.$router.push("/verify");
+                        }
+                    } else {
+                        alert(json.data.message);
+                    }
+                });
+            }
         },
         checkPhone() {
             if (this.phone) {

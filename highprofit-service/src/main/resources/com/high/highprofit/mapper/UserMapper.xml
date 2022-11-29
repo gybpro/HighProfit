@@ -143,6 +143,8 @@
         select <include refid="Base_Column_List"/>
         from u_user
         where phone = #{phone}
-        and login_password = #{password}
+        <if test="password != null">
+            and login_password = #{password}
+        </if>
     </select>
 </mapper>
