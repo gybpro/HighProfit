@@ -15,7 +15,7 @@ import java.util.Date;
  * @version 1.0
  * @since 1.0
  */
-@DubboService
+@DubboService(version = "1.0.0")
 public class UserServiceImpl implements UserService{
     private final UserMapper userMapper;
 
@@ -57,5 +57,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public int verify(Integer id, String idCard, String name) {
         return userMapper.updateIdCardAndName(id, idCard, name);
+    }
+
+    @Override
+    public int getUserCount() {
+        return userMapper.selectUserCount();
     }
 }

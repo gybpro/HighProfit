@@ -14,4 +14,6 @@ public interface BidInfoMapper {
     int updateByPrimaryKeySelective(BidInfo row);
 
     int updateByPrimaryKey(BidInfo row);
+
+    int selectTotalMoney();
 }

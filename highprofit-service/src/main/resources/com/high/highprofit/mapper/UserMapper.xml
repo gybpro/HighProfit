@@ -159,4 +159,9 @@
         set id_card = #{idCard}, name = #{name}
         where id = #{id}
     </update>
+
+    <select id="selectUserCount" resultType="integer">
+        select count(*)
+        from u_user
+    </select>
 </mapper>

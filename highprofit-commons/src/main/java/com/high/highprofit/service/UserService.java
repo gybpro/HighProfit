@@ -19,4 +19,6 @@ public interface UserService {
     int logLastLoginTime(Integer id);
 
     int verify(Integer id, String idCard, String name);
+
+    int getUserCount();
 }

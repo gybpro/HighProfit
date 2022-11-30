@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/user")
 @CrossOrigin
 public class UserController {
-    @DubboReference
+    @DubboReference(version = "1.0.0")
     private final UserService userService;
 
     private final RedisTemplate<String, Object> redisTemplate;
@@ -143,6 +143,12 @@ public class UserController {
             resultDTO.setMessage("身份证信息错误");
         }
         return resultDTO;
+    }
+
+    @GetMapping("/userCount")
+    @ResponseBody
+    public String userCount() {
+        return userService.getUserCount() + "";
     }
 
     private String getRealCode(String actionName, String phone) {

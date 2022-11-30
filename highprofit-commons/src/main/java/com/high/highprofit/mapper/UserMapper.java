@@ -26,4 +26,6 @@ public interface UserMapper {
     int updateLastLoginTime(Integer id, Date lastLoginTime);
 
     int updateIdCardAndName(Integer id, String idCard, String name);
+
+    int selectUserCount();
 }

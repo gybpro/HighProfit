@@ -11,8 +11,8 @@
                         <Rate/>
                         历史年化收益
                     </p>
-                    <p>平台用户<span>100000+</span>位 </p>
-                    <p>累计成交金额<span>15000+</span>万元</p>
+                    <p>平台用户<UserCount/>位 </p>
+                    <p>累计成交金额<TotalMoney/>元</p>
                 </div>
                 <!--登录栏-->
                 <div class="login-box">
@@ -79,10 +79,12 @@ import Footer from "@/components/Footer";
 import regExp from "@/utils/regExp";
 import Vue from "vue";
 import qs from "qs";
+import UserCount from "@/components/UserCount";
+import TotalMoney from "@/components/TotalMoney";
 
 export default {
     name: "LoginView",
-    components: {Rate, Header, Footer},
+    components: {TotalMoney, UserCount, Rate, Header, Footer},
     data() {
         return {
             phone: "",
