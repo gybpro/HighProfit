@@ -21,11 +21,11 @@
             <div class="banner-abs">
                 <div class="banner-abs-box">
                     <div class="banner-abs-title">动力金融网历史年化收益率</div>
-                    <b>5.61<i>%</i></b>
+                    <b><Rate/></b>
                     <p>平台用户数</p>
-                    <span>39<i>位</i></span>
+                    <span><UserCount/> <i>位</i></span>
                     <p class="banner-abs-border">累计成交金额</p>
-                    <span>5000.0<i>元</i></span>
+                    <span><TotalMoney/> <i>元</i></span>
                 </div>
             </div>
         </div>
@@ -274,9 +274,12 @@
 <script>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import UserCount from "@/components/UserCount";
+import TotalMoney from "@/components/TotalMoney";
+import Rate from "@/components/Rate";
 export default {
     name: "IndexView",
-    components: {Header, Footer}
+    components: {Rate, TotalMoney, UserCount, Header, Footer}
 }
 </script>
 

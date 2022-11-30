@@ -71,6 +71,7 @@ export default {
             // Vue.axios.post("/user/verify", {name: this.name, idCard: this.idCard}).then(json => {
                 if (json.data.code === "1") {
                     alert(json.data.message);
+                    sessionStorage.setItem("user", JSON.stringify(json.data.result.user));
                     this.$router.push("/");
                 } else if (json.data.code === "2") {
                     alert(json.data.message);

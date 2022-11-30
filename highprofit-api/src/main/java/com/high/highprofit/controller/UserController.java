@@ -126,10 +126,13 @@ public class UserController {
             User user = (User) ops.get(token);
             if (user != null) {
                 if (userService.verify(user.getId(), idCard, name) > 0) {
-                    user = userService.login(user.getPhone(), user.getLoginPassword());
+                    user = userService.login(user.getPhone(), null);
                     ops.set(token, user, 30, TimeUnit.MINUTES);
                     resultDTO.setCode("1");
                     resultDTO.setMessage("实名认证成功");
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("user", user);
+                    resultDTO.setResult(map);
                 } else {
                     resultDTO.setCode("0");
                     resultDTO.setMessage("系统忙，请稍后再试......");
@@ -142,6 +145,16 @@ public class UserController {
             resultDTO.setCode("0");
             resultDTO.setMessage("身份证信息错误");
         }
+        return resultDTO;
+    }
+
+    @GetMapping("/logout")
+    @ResponseBody
+    public ResultDTO logout(@RequestHeader("token") String token) {
+        ResultDTO resultDTO = new ResultDTO();
+        redisTemplate.opsForValue().set(token, "", 0);
+        resultDTO.setCode("1");
+        resultDTO.setMessage("退出成功");
         return resultDTO;
     }
 
