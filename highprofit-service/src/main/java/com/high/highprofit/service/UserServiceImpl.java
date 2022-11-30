@@ -28,9 +28,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int registerUser(String phone, String password) {
-        if (password != null) {
-            password  = DigestUtils.md5DigestAsHex((passwordSalt + password).getBytes());
-        }
+        password  = DigestUtils.md5DigestAsHex((passwordSalt + password).getBytes());
         User user = new User();
         user.setPhone(phone);
         user.setLoginPassword(password);
@@ -45,6 +43,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User login(String phone, String password) {
+        if (password != null) {
+            password  = DigestUtils.md5DigestAsHex((passwordSalt + password).getBytes());
+        }
         return userMapper.selectUserByPhoneAndPwd(phone, password);
     }
 

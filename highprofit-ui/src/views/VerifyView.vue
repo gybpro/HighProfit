@@ -52,12 +52,12 @@ export default {
     },
     methods: {
         sendVerify() {
-            if (this.name) {
-                this.name = "姓名不能为空";
-                alert(this.name);
+            if (!this.name) {
+                this.nameErr = "姓名不能为空";
+                alert(this.nameErr);
                 return;
             }
-            if (this.idCard) {
+            if (!this.idCard) {
                 this.idCardErr = "身份证号码不能为空";
                 alert(this.idCardErr);
                 return;
@@ -68,6 +68,7 @@ export default {
                 return;
             }
             Vue.axios.post("/user/verify", `name=${this.name}&idCard=${this.idCard}`).then(json => {
+            // Vue.axios.post("/user/verify", {name: this.name, idCard: this.idCard}).then(json => {
                 if (json.data.code === "1") {
                     this.$router.push("/");
                 } else {
@@ -76,13 +77,14 @@ export default {
             });
         },
         checkName() {
-            if (this.name) {
-                this.name = "姓名不能为空";
+            if (!this.name) {
+                this.nameErr = "姓名不能为空";
             }
         },
         checkIdCard() {
-            if (this.idCard) {
+            if (!this.idCard) {
                 this.idCardErr = "身份证号码不能为空";
+                return;
             }
             if (!regExp.idCard.test(this.idCard)) {
                 this.idCardErr = "身份证格式不正确";

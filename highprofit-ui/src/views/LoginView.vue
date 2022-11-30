@@ -140,7 +140,12 @@ export default {
             if (this.phone && this.password) {
                 Vue.axios.post("/user/pwdLogin", `phone=${this.phone}&password=${this.password}`).then(json => {
                     if (json.data.code === "1") {
-                        // 保存客户端标识
+                        // 用sessionStorage会话存储器保存客户端标识(token令牌)
+                        sessionStorage.setItem("token", json.data.result.token);
+                        // sessionStorage仅支持字符串存储，如果需要存储对象，需要将对象先转换为json字符串、
+                        let userStr = JSON.stringify(json.data.result.user);
+                        sessionStorage.setItem("user", userStr);
+
                         // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
                         let user = json.data.result.user;
                         if (user.name && user.idCard) {
@@ -175,7 +180,12 @@ export default {
             }
             Vue.axios.post("/user/codeLogin", `phone=${this.phone}&code=${this.code}`).then(json => {
                 if (json.data.code === "1") {
-                    // 保存客户端标识
+                    // 用sessionStorage会话存储器保存客户端标识(token令牌)
+                    sessionStorage.setItem("token", json.data.result.token);
+                    // sessionStorage仅支持字符串存储，如果需要存储对象，需要将对象先转换为json字符串、
+                    let userStr = JSON.stringify(json.data.result.user);
+                    sessionStorage.setItem("user", userStr);
+
                     // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
                     let user = json.data.result.user;
                     if (user.name && user.idCard) {

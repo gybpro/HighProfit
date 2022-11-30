@@ -104,9 +104,12 @@ public class UserController {
     }
 
     @PostMapping("/verify")
-    public ResultDTO verify(String idCard, String name, @RequestHeader("token") String token) throws Exception {
+    @ResponseBody
+    // public ResultDTO verify(@RequestBody Map<String, String> map,
+    public ResultDTO verify(String idCard, String name,
+                            @RequestHeader("token") String token) throws Exception {
         Map<String, Object> params = new HashMap<>();
-        params.put("idCard", idCard);
+        params.put("idcard", idCard);
         params.put("name", name);
         params.put("appkey", "b102ad94caf544c9854cbecfe3eb4ae2");
         String result = HttpClientUtils.doPost("https://way.jd.com/lundear/idcard", params);

@@ -9,6 +9,26 @@ import VueAxios from "vue-axios";
 // Global axios defaults：全局默认设置，axios的默认根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8081';
 
+// 添加请求拦截器，每次发送请求携带token令牌
+// use的第一个函数参数是请求前配置，第二个函数参数是处理请求错误
+axios.interceptors.request.use(function (config) {
+    // 请求前配置
+    // 添加token令牌
+    let token = sessionStorage.getItem("token");
+    if (token) {
+        config.headers.token = token;
+    }
+    return config;
+}, function (error) {
+    // 处理请求错误
+    return Promise.reject(error);
+});
+
+// 整合ElementUI
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
 Vue.use(VueAxios, axios);
 
 // 导入css文件
