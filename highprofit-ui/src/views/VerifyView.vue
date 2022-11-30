@@ -70,7 +70,11 @@ export default {
             Vue.axios.post("/user/verify", `name=${this.name}&idCard=${this.idCard}`).then(json => {
             // Vue.axios.post("/user/verify", {name: this.name, idCard: this.idCard}).then(json => {
                 if (json.data.code === "1") {
+                    alert(json.data.message);
                     this.$router.push("/");
+                } else if (json.data.code === "2") {
+                    alert(json.data.message);
+                    this.$router.push("/login")
                 } else {
                     alert(json.data.message);
                 }

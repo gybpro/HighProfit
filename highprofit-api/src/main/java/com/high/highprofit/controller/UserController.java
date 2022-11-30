@@ -111,7 +111,7 @@ public class UserController {
         Map<String, Object> params = new HashMap<>();
         params.put("idcard", idCard);
         params.put("name", name);
-        params.put("appkey", "b102ad94caf544c9854cbecfe3eb4ae2");
+        params.put("appkey", "jd申请的appkey");
         String result = HttpClientUtils.doPost("https://way.jd.com/lundear/idcard", params);
         // 检查结果
         // Jackson提供的对象映射工具(json字符串 <==> Java对象)
@@ -119,7 +119,7 @@ public class UserController {
         // readValue(json字符串, .class类型) json字符串 => Java对象
         VerifyDTO verifyDTO = objectMapper.readValue(result, VerifyDTO.class);
         ResultDTO resultDTO = new ResultDTO();
-        if ("0".equals(verifyDTO.getResult().get("code"))) {
+        if ("0".equals(verifyDTO.getResult().get("code") + "")) {
             // 认证成功
             // 更新令牌
             ValueOperations<String, Object> ops = redisTemplate.opsForValue();
@@ -135,9 +135,12 @@ public class UserController {
                     resultDTO.setMessage("系统忙，请稍后再试......");
                 }
             } else {
-                resultDTO.setCode("0");
-                resultDTO.setMessage("身份证信息错误");
+                resultDTO.setCode("2");
+                resultDTO.setMessage("登录已过期，请重新登录");
             }
+        } else {
+            resultDTO.setCode("0");
+            resultDTO.setMessage("身份证信息错误");
         }
         return resultDTO;
     }
