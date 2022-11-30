@@ -1,5 +1,9 @@
 package com.high.highprofit.service;
 
+import com.high.highprofit.bean.Product;
+
+import java.util.List;
+
 /**
  * 产品相关业务接口
  *
@@ -9,4 +13,10 @@ package com.high.highprofit.service;
  */
 public interface ProductService {
     String getAvgRate();
+
+    Product getNewUserPro();
+
+    Product getPrePro(Integer cycle);
+
+    List<Product> getScatter();
 }

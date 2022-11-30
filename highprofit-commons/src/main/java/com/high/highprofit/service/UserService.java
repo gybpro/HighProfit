@@ -20,5 +20,5 @@ public interface UserService {
 
     int verify(Integer id, String idCard, String name);
 
-    int getUserCount();
+    String getUserCount();
 }

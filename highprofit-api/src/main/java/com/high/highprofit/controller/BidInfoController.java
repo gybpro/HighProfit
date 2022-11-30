@@ -29,6 +29,6 @@ public class BidInfoController {
     @GetMapping("/totalMoney")
     @ResponseBody
     public String totalMoney() {
-        return bidInfoService.getTotalMoney() + "";
+        return bidInfoService.getTotalMoney();
     }
 }

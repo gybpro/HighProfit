@@ -200,8 +200,32 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="getAvgRate" resultType="string">
+    <select id="selectAvgRate" resultType="string">
         select avg(rate)
         from b_product_info
+    </select>
+
+    <select id="selectNewUserPro" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from b_product_info
+        where product_type = 0
+        limit 0, 1
+    </select>
+
+    <select id="selectPrePro" parameterType="integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from b_product_info
+        where product_type = 1
+        and cycle = #{cycle}
+        limit 0, 1
+    </select>
+
+    <select id="selectScatter" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from b_product_info
+        where product_type = 2
+          and product_status = 0
+        order by left_product_money, rate desc
+        limit 3
     </select>
 </mapper>

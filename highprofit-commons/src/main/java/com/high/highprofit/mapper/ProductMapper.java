@@ -2,6 +2,8 @@ package com.high.highprofit.mapper;
 
 import com.high.highprofit.bean.Product;
 
+import java.util.List;
+
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -15,5 +17,11 @@ public interface ProductMapper {
 
     int updateByPrimaryKey(Product row);
 
-    String getAvgRate();
+    String selectAvgRate();
+
+    Product selectNewUserPro();
+
+    Product selectPrePro(Integer cycle);
+
+    List<Product> selectScatter();
 }

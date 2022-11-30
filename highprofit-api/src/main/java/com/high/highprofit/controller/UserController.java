@@ -161,7 +161,7 @@ public class UserController {
     @GetMapping("/userCount")
     @ResponseBody
     public String userCount() {
-        return userService.getUserCount() + "";
+        return userService.getUserCount();
     }
 
     private String getRealCode(String actionName, String phone) {

@@ -38,8 +38,7 @@ public class ExceptionAdvice {
         e.printStackTrace(); // 在控制台打印错误日志
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode("0");
-        // resultDTO.setMessage("系统异常！");
-        resultDTO.setMessage(e.getMessage());
+        resultDTO.setMessage("系统异常！" + e.getMessage());
         return resultDTO;
     }
 }

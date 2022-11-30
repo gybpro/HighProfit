@@ -8,5 +8,5 @@ package com.high.highprofit.service;
  * @since 1.0
  */
 public interface BidInfoService {
-    int getTotalMoney();
+    String getTotalMoney();
 }

@@ -4,9 +4,12 @@ import com.high.highprofit.bean.User;
 import com.high.highprofit.mapper.UserMapper;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户相关业务实现类
@@ -21,9 +24,12 @@ public class UserServiceImpl implements UserService{
 
     private final String passwordSalt;
 
-    public UserServiceImpl(UserMapper userMapper, @Value("${password.salt}") String passwordSalt) {
+    private RedisTemplate<String, Object> redisTemplate;
+
+    public UserServiceImpl(UserMapper userMapper, @Value("${password.salt}") String passwordSalt, RedisTemplate<String, Object> redisTemplate) {
         this.userMapper = userMapper;
         this.passwordSalt = passwordSalt;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -60,7 +66,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int getUserCount() {
-        return userMapper.selectUserCount();
+    public String getUserCount() {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        String userCount = (String) valueOperations.get("userCount");
+        if (userCount == null || userCount.isEmpty()) {
+            userCount = String.valueOf(userMapper.selectUserCount());
+            valueOperations.set("userCount", userCount, 1, TimeUnit.MINUTES);
+        }
+        return userCount;
     }
 }

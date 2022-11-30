@@ -1,9 +1,10 @@
 package com.high.highprofit.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Product {
+public class Product implements Serializable {
     private Integer id;
 
     private String productName;

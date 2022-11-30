@@ -57,25 +57,25 @@
 
         <!--产品-->
         <div class="content">
-            <h2 class="public-title"><span>新手宝</span></h2>
+            <h2 class="public-title"><span>{{ product0.productName }}</span></h2>
             <div class="new-user">
                 <div class="new-user-sm">
-                    <span>1000.0元起投</span>
-                    <span>投资最高限额10000.0元</span>
+                    <span>{{ product0.bidMinLimit }}元起投</span>
+                    <span>投资最高限额{{ product0.bidMaxLimit }}元</span>
                     <span>当日计息</span>
                 </div>
                 <div class="new-user-number">
                     <ul>
                         <li>
-                            <p><b>4.9</b>%</p>
+                            <p><b>{{ product0.rate }}</b>%</p>
                             <span>历史年化收益率</span>
                         </li>
                         <li>
-                            <p><b>1</b>个月</p>
+                            <p><b>{{ product0.cycle }}</b>个月</p>
                             <span>投资周期</span>
                         </li>
                         <li>
-                            <p><b>250000</b>元</p>
+                            <p><b>{{ product0.leftProductMoney }}</b>元</p>
                             <span>余利可投资金额</span>
                         </li>
                     </ul>
@@ -84,155 +84,23 @@
                 <span class="new-tag">新用户专享</span>
             </div>
 
-            <h2 class="public-title"><span>优选产品</span> <a href="list.html" target="_blank" class="public-title-more">查看更多产品>></a></h2>
+            <h2 class="public-title">
+                <span>优选产品</span>
+                <router-link to="/list/1" class="public-title-more">查看更多产品>></router-link>
+            </h2>
             <ul class="preferred-select clearfix">
-                <li>
-                    <h3 class="preferred-select-title">
-                        <span>满月宝</span>
-                        <img src="/image/1-bg1.jpg" alt="">
-                    </h3>
-                    <div class="preferred-select-number">
-                        <p><b>4.9</b>%</p>
-                        <span>历史年化收益率</span>
-                    </div>
-                    <div class="preferred-select-date">
-                        <div>
-                            <span>投资周期</span>
-                            <p><b>1</b>个月</p>
-                        </div>
-                        <div>
-                            <span>余利可投资金额</span>
-                            <p><b>250000.0</b>元</p>
-                        </div>
-                    </div>
-                    <p class="preferred-select-txt">
-                        优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。
-                    </p>
-                    <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
-                </li>
-                <li>
-                    <h3 class="preferred-select-title">
-                        <span>季度宝</span>
-                        <img src="/image/1-bg2.jpg" alt="">
-                    </h3>
-                    <div class="preferred-select-number">
-                        <p><b>6.2</b>%</p>
-                        <span>历史年化收益率</span>
-                    </div>
-                    <div class="preferred-select-date">
-                        <div>
-                            <span>投资周期</span>
-                            <p><b>3</b>个月</p>
-                        </div>
-                        <div>
-                            <span>余利可投资金额</span>
-                            <p class="preferred-select-date-no"><b>0.0</b>元</p>
-                        </div>
-                    </div>
-                    <p class="preferred-select-txt">
-                        优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。
-                    </p>
-                    <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
-                </li>
-                <li>
-                    <h3 class="preferred-select-title">
-                        <span>双季宝</span>
-                        <img src="/image/1-bg3.jpg" alt="">
-                    </h3>
-                    <div class="preferred-select-number">
-                        <p><b>7.1</b>%</p>
-                        <span>历史年化收益率</span>
-                    </div>
-                    <div class="preferred-select-date">
-                        <div>
-                            <span>投资周期</span>
-                            <p><b>6</b>个月</p>
-                        </div>
-                        <div>
-                            <span>余利可投资金额</span>
-                            <p><b>250000.0</b>元</p>
-                        </div>
-                    </div>
-                    <p class="preferred-select-txt">
-                        优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。
-                    </p>
-                    <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
-                </li>
+                <ProductItem :product="product1" />
+                <ProductItem :product="product3" />
+                <ProductItem :product="product6" />
             </ul>
 
-            <h2 class="public-title"><span>散标产品</span> <a href="list.html" target="_blank" class="public-title-more">查看更多产品>></a></h2>
+            <h2 class="public-title">
+                <span>散标产品</span>
+                <router-link to="/list/2" class="public-title-more">查看更多产品>></router-link>
+            </h2>
             <ul class="preferred-select clearfix">
-                <li>
-                    <h3 class="preferred-select-title1">个人信用消费借款
-                        <span>散标</span>
-                    </h3>
-                    <div class="preferred-select-number">
-                        <p><b>4.9</b>%</p>
-                        <span>历史年化收益率</span>
-                    </div>
-                    <div class="preferred-select-date">
-                        <div>
-                            <span>投资周期</span>
-                            <p><b>1</b>个月</p>
-                        </div>
-                        <div>
-                            <span>余利可投资金额</span>
-                            <p><b>250000.0</b>元</p>
-                        </div>
-                    </div>
-                    <p class="preferred-select-txt">
-                        优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。
-                    </p>
-                    <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
-                </li>
-                <li>
-                    <h3 class="preferred-select-title1">个人信用消费借款
-                        <span>散标</span>
-                    </h3>
-                    <div class="preferred-select-number">
-                        <p><b>6.2</b>%</p>
-                        <span>历史年化收益率</span>
-                    </div>
-                    <div class="preferred-select-date">
-                        <div>
-                            <span>投资周期</span>
-                            <p><b>1</b>个月</p>
-                        </div>
-                        <div>
-                            <span>余利可投资金额</span>
-                            <p class="preferred-select-date-no"><b>0.0</b>元</p>
-                        </div>
-                    </div>
-                    <p class="preferred-select-txt">
-                        优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。
-                    </p>
-                    <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
-                </li>
-                <li>
-                    <h3 class="preferred-select-title1">个人信用消费借款
-                        <span>散标</span>
-                    </h3>
-                    <div class="preferred-select-number">
-                        <p><b>7.1</b>%</p>
-                        <span>历史年化收益率</span>
-                    </div>
-                    <div class="preferred-select-date">
-                        <div>
-                            <span>投资周期</span>
-                            <p><b>1</b>个月</p>
-                        </div>
-                        <div>
-                            <span>余利可投资金额</span>
-                            <p><b>250000.0</b>元</p>
-                        </div>
-                    </div>
-                    <p class="preferred-select-txt">
-                        优选计划项目，投资回报周期1个月，起点低，适合短期资金周转、对流动性要求高的投资人。
-                    </p>
-                    <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
-                </li>
+                <ProductItem v-for="pro in products" :product="pro" />
             </ul>
-
         </div>
 
         <!--说明-->
@@ -277,9 +145,27 @@ import Footer from "@/components/Footer";
 import UserCount from "@/components/UserCount";
 import TotalMoney from "@/components/TotalMoney";
 import Rate from "@/components/Rate";
+import Vue from "vue";
+import ProductItem from "@/components/ProductItem";
 export default {
     name: "IndexView",
-    components: {Rate, TotalMoney, UserCount, Header, Footer}
+    components: {ProductItem, Rate, TotalMoney, UserCount, Header, Footer},
+    data() {
+        return {
+            product0: {}, // 新手宝
+            product1: {}, // 优选--满月宝
+            product3: {}, // 优选--季度宝
+            product6: {}, // 优选--双季宝
+            products: [], // 散标
+        }
+    },
+    created() {
+        Vue.axios.get("/product/newUserPro").then(json => this.product0 = json.data);
+        Vue.axios.get("/product/prePro/1").then(json => this.product1 = json.data);
+        Vue.axios.get("/product/prePro/3").then(json => this.product3 = json.data);
+        Vue.axios.get("/product/prePro/6").then(json => this.product6 = json.data);
+        Vue.axios.get("/product/scatter").then(json => this.products = json.data);
+    }
 }
 </script>
 
