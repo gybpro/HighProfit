@@ -31,6 +31,7 @@
         <aliyun-dysmsapi20170525.version>2.0.22</aliyun-dysmsapi20170525.version>
         <httpclient.version>4.5.13</httpclient.version>
         <fastjson2.version>2.0.14</fastjson2.version>
+        <pagehelper.version>1.4.5</pagehelper.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +41,12 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+            <!--分页插件：开发必须会分页-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
             </dependency>
             <!--dubbo依赖-->
             <dependency>

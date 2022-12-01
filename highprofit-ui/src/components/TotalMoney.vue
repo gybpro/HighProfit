@@ -14,7 +14,7 @@ export default {
     },
     created() {
         Vue.axios.get("bidInfo/totalMoney").then(json => {
-           this.totalMoney = 1000000 + json.data;
+           this.totalMoney = 250000 + json.data;
         });
     }
 }

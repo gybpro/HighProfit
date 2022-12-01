@@ -108,4 +108,13 @@
         select sum(bid_money)
         from b_bid_info
     </select>
+
+    <select id="selectTop3" resultType="map">
+        select u.phone, sum(b.bid_money) money
+        from b_bid_info b
+                 left join u_user u
+                           on b.uid = u.id
+        group by u.id
+        order by money desc limit 3
+    </select>
 </mapper>

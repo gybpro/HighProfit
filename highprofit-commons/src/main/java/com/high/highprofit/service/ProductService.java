@@ -19,4 +19,6 @@ public interface ProductService {
     Product getPrePro(Integer cycle);
 
     List<Product> getScatter();
+
+    Object pagingQuery(Integer pageNum, Integer pageSize, Integer proType);
 }

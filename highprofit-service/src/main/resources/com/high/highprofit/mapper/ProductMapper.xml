@@ -209,7 +209,7 @@
         select <include refid="Base_Column_List"/>
         from b_product_info
         where product_type = 0
-        limit 0, 1
+        limit 1
     </select>
 
     <select id="selectPrePro" parameterType="integer" resultMap="BaseResultMap">
@@ -217,7 +217,7 @@
         from b_product_info
         where product_type = 1
         and cycle = #{cycle}
-        limit 0, 1
+        limit 1
     </select>
 
     <select id="selectScatter" resultMap="BaseResultMap">
@@ -227,5 +227,11 @@
           and product_status = 0
         order by left_product_money, rate desc
         limit 3
+    </select>
+
+    <select id="selectByProductType" parameterType="integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from b_product_info
+        where product_type = #{productType}
     </select>
 </mapper>

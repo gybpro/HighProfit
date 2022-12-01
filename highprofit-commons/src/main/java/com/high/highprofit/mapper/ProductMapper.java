@@ -24,4 +24,6 @@ public interface ProductMapper {
     Product selectPrePro(Integer cycle);
 
     List<Product> selectScatter();
+
+    List<Product> selectByProductType(Integer proType);
 }

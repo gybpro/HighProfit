@@ -11,8 +11,8 @@
                         <a href="javascript:void(0);">我要投资</a>
                         <!--二级导航-->
                         <div class="two-title">
-                            <a href="javascript:;">优先类产品</a>
-                            <a href="javascript:;">散标类产品</a>
+                            <router-link to="/list/1">优选类产品</router-link>
+                            <router-link to="/list/2">散标类产品</router-link>
                         </div>
                     </li>
                     <li><router-link to="/userCenter">用户中心</router-link></li>

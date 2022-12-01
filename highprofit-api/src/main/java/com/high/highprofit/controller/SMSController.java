@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @since 1.0
  */
-@Controller
+@RestController
 @RequestMapping("/sms")
 @CrossOrigin
 public class SMSController {
@@ -34,15 +34,11 @@ public class SMSController {
     }
 
     @GetMapping("/register/{phone}")
-    @ResponseBody
-    @CrossOrigin
     public String register(@PathVariable String phone) throws Exception {
         return sendCode("register", phone);
     }
 
     @GetMapping("/login/{phone}")
-    @ResponseBody
-    @CrossOrigin
     public String login(@PathVariable String phone) throws Exception {
         return sendCode("login", phone);
     }

@@ -1,5 +1,7 @@
 package com.high.highprofit.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.high.highprofit.bean.Product;
 import com.high.highprofit.mapper.ProductMapper;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -69,5 +71,21 @@ public class ProductServiceImpl implements ProductService{
             valueOperations.set("scatter", scatter, 10, TimeUnit.SECONDS);
         }
         return scatter;
+    }
+
+    @Override
+    public PageInfo<Product> pagingQuery(Integer pageNum, Integer pageSize, Integer proType) {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        PageInfo<Product> pageInfo = (PageInfo<Product>) valueOperations.get("pageInfo" + pageNum + proType);
+        if (pageInfo == null) {
+            // 开启分页(核心)
+            PageHelper.startPage(pageNum, pageSize);
+
+            List<Product> productList = productMapper.selectByProductType(proType);
+
+            pageInfo = new PageInfo<>(productList, 5);
+            valueOperations.set("pageInfo" + pageNum + proType, pageInfo, 10, TimeUnit.MINUTES);
+        }
+        return pageInfo;
     }
 }

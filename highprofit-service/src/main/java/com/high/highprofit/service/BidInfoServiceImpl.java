@@ -5,6 +5,8 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,5 +36,16 @@ public class BidInfoServiceImpl implements BidInfoService {
             valueOperations.set("totalMoney", totalMoney, 1, TimeUnit.MINUTES);
         }
         return totalMoney;
+    }
+
+    @Override
+    public List<Map<String, Object>> getTop3() {
+        List<Map<String, Object>> maps = bidInfoMapper.selectTop3();
+        maps.forEach(map -> {
+            String phone = (String) map.get("phone");
+            phone = phone.substring(0, 3) + "******" + phone.substring(9);
+            map.put("phone", phone);
+        });
+        return maps;
     }
 }

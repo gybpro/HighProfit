@@ -3,10 +3,10 @@ package com.high.highprofit.controller;
 import com.high.highprofit.service.BidInfoService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 投资记录相关控制类
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @version 1.0
  * @since 1.0
  */
-@Controller
+@RestController
 @RequestMapping("/bidInfo")
 @CrossOrigin
 public class BidInfoController {
@@ -27,8 +27,12 @@ public class BidInfoController {
     }
 
     @GetMapping("/totalMoney")
-    @ResponseBody
     public String totalMoney() {
         return bidInfoService.getTotalMoney();
+    }
+
+    @GetMapping("/top3")
+    public List<Map<String, Object>> top3() {
+        return bidInfoService.getTop3();
     }
 }

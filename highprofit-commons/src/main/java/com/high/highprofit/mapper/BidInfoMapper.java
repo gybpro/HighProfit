@@ -2,6 +2,9 @@ package com.high.highprofit.mapper;
 
 import com.high.highprofit.bean.BidInfo;
 
+import java.util.List;
+import java.util.Map;
+
 public interface BidInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +19,6 @@ public interface BidInfoMapper {
     int updateByPrimaryKey(BidInfo row);
 
     int selectTotalMoney();
+
+    List<Map<String, Object>> selectTop3();
 }

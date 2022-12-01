@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import RegisterView from "@/views/RegisterView";
-import LoginView from "@/views/LoginView";
-import IndexView from "@/views/IndexView";
-import VerifyView from "@/views/VerifyView";
 
 Vue.use(VueRouter)
 
@@ -11,22 +7,27 @@ const routes = [
     {
         path: '/',
         name: 'index',
-        component: IndexView
+        component: () => import("@/views/IndexView")
     },
     {
         path: '/login',
         name: 'login',
-        component: LoginView
+        component: () => import("@/views/LoginView")
     },
     {
         path: '/register',
         name: 'register',
-        component: RegisterView
+        component: () => import("@/views/RegisterView")
     },
     {
         path: '/verify',
         name: 'verify',
-        component: VerifyView
+        component: () => import("@/views/VerifyView")
+    },
+    {
+        path: '/list/:type', // 动态路由，:type表示一个变量
+        name: 'list',
+        component: () => import("@/views/ListView")
     }
 ]
 

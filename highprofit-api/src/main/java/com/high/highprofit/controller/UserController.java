@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @since 1.0
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 @CrossOrigin
 public class UserController {
@@ -43,7 +43,6 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    @ResponseBody
     public ResultDTO register(String phone, String password, String code) {
         // 表单验证
         String realCode = getRealCode("register", phone);
@@ -65,7 +64,6 @@ public class UserController {
     }
 
     @GetMapping("/check/{phone}")
-    @ResponseBody
     public boolean checkPhone(@PathVariable String phone) {
         return userService.checkPhone(phone);
     }
@@ -80,7 +78,6 @@ public class UserController {
     } */
 
     @PostMapping("/pwdLogin")
-    @ResponseBody
     public ResultDTO pwdLogin(String phone, String password) {
         // 表单验证
         CheckFormat.checkPhone(phone);
@@ -92,7 +89,6 @@ public class UserController {
     }
 
     @PostMapping("/codeLogin")
-    @ResponseBody
     public ResultDTO codeLogin(String phone, String code) {
         String realCode = getRealCode("login", phone);
         // 表单验证
@@ -104,7 +100,6 @@ public class UserController {
     }
 
     @PostMapping("/verify")
-    @ResponseBody
     // public ResultDTO verify(@RequestBody Map<String, String> map,
     public ResultDTO verify(String idCard, String name,
                             @RequestHeader("token") String token) throws Exception {
@@ -149,7 +144,6 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    @ResponseBody
     public ResultDTO logout(@RequestHeader("token") String token) {
         ResultDTO resultDTO = new ResultDTO();
         redisTemplate.opsForValue().set(token, "", 0);
@@ -159,7 +153,6 @@ public class UserController {
     }
 
     @GetMapping("/userCount")
-    @ResponseBody
     public String userCount() {
         return userService.getUserCount();
     }
