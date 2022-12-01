@@ -28,4 +28,6 @@ public interface UserMapper {
     int updateIdCardAndName(Integer id, String idCard, String name);
 
     int selectUserCount();
+
+    int updateHeaderImage(Integer id, String headerImage);
 }

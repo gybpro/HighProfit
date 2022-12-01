@@ -11,12 +11,15 @@ import com.high.highprofit.util.HttpClientUtils;
 import com.high.highprofit.util.UUIDUtil;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -37,9 +40,18 @@ public class UserController {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public UserController(UserService userService, RedisTemplate<String, Object> redisTemplate) {
+    private final String savePath;
+
+    private final String saveAddress;
+
+    public UserController(UserService userService,
+                          RedisTemplate<String, Object> redisTemplate,
+                          @Value("${userPic.savePath}") String savePath,
+                          @Value("${userPic.saveAddress}") String saveAddress) {
         this.userService = userService;
         this.redisTemplate = redisTemplate;
+        this.savePath = savePath;
+        this.saveAddress = saveAddress;
     }
 
     @PostMapping("/register")
@@ -50,7 +62,7 @@ public class UserController {
         CheckFormat.checkCode(code, realCode);
         CheckFormat.checkPhone(phone);
         CheckFormat.checkPwd(password);
-        Assert.isFlag(!checkPhone(phone), "手机号码已被注册");
+        Assert.isFlag(checkPhone(phone), "手机号码已被注册");
 
         ResultDTO resultDTO = new ResultDTO();
         if (userService.registerUser(phone, password) > 0) {
@@ -82,7 +94,7 @@ public class UserController {
         // 表单验证
         CheckFormat.checkPhone(phone);
         CheckFormat.checkPwd(password);
-        Assert.isFlag(checkPhone(phone), "手机号码尚未注册");
+        Assert.isFlag(!checkPhone(phone), "手机号码尚未注册");
 
         User user = userService.login(phone, password);
         return loginPostProcess(new ResultDTO(), user);
@@ -93,7 +105,7 @@ public class UserController {
         String realCode = getRealCode("login", phone);
         // 表单验证
         CheckFormat.checkCode(code, realCode);
-        Assert.isFlag(checkPhone(phone), "手机号码尚未注册");
+        Assert.isFlag(!checkPhone(phone), "手机号码尚未注册");
 
         User user = userService.login(phone, null);
         return loginPostProcess(new ResultDTO(), user);
@@ -155,6 +167,43 @@ public class UserController {
     @GetMapping("/userCount")
     public String userCount() {
         return userService.getUserCount();
+    }
+
+    @PostMapping("/upload")
+    // MultipartFile传输文件对象
+    public String upload(MultipartFile userPic, @RequestHeader("token") String token) throws IOException {
+        User user = (User) redisTemplate.opsForValue().get(token);
+        Assert.isFlag(user != null, "用户未登录，请前往登录");
+        Integer id = user.getId();
+
+        // 文件存储目录路径
+        File savePathFile = new File(savePath);
+        boolean mkdirs = savePathFile.mkdirs();// 如果文件不存在，则创建
+
+        // 存储目标文件路径
+        File file = new File(savePathFile, id.toString());
+        // 将文件传输到存储目标文件路径
+        userPic.transferTo(file);
+
+        String headerImage = saveAddress + "user/img/" + id;
+
+        if (userService.updatePic(id, headerImage)) {
+            return headerImage;
+        }
+        return "";
+    }
+
+    @GetMapping("/img/{id}")
+    public void img(@PathVariable String id, HttpServletResponse response) throws Exception {
+        InputStream in = new FileInputStream(savePath + id);
+        OutputStream out = response.getOutputStream();
+        byte[] bytes = new byte[1024];
+        int len;
+        while ((len = in.read(bytes)) != -1) {
+            out.write(bytes, 0, len);
+        }
+        out.close();
+        in.close();
     }
 
     private String getRealCode(String actionName, String phone) {

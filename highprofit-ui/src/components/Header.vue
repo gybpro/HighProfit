@@ -15,7 +15,10 @@
                             <router-link to="/list/2">散标类产品</router-link>
                         </div>
                     </li>
-                    <li><router-link to="/userCenter">用户中心</router-link></li>
+                    <li>
+                        <a v-if="!sessionStorage.getItem('user')"><span style="color: #c0c0c0">用户中心</span></a>
+                        <router-link v-else to="/userCenter">用户中心</router-link>
+                    </li>
                     <li><a href="javascript:;">信息披露</a></li>
                     <li><a href="javascript:;">安全计划</a></li>
                 </ul>

@@ -2,6 +2,8 @@ package com.high.highprofit.mapper;
 
 import com.high.highprofit.bean.FinanceAccount;
 
+import java.math.BigDecimal;
+
 public interface FinanceAccountMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface FinanceAccountMapper {
     int updateByPrimaryKeySelective(FinanceAccount row);
 
     int updateByPrimaryKey(FinanceAccount row);
+
+    BigDecimal selectAvailableMoneyByUserId(Integer id);
 }

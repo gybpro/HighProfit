@@ -28,6 +28,11 @@ const routes = [
         path: '/list/:type', // 动态路由，:type表示一个变量
         name: 'list',
         component: () => import("@/views/ListView")
+    },
+    {
+        path: '/userCenter',
+        name: 'userCenter',
+        component: () => import("@/views/UserCenterView")
     }
 ]
 

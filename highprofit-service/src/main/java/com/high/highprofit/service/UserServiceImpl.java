@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService{
         }
         return userCount;
     }
+
+    @Override
+    public boolean updatePic(Integer id, String headerImage) {
+        return userMapper.updateHeaderImage(id, headerImage) > 0;
+    }
 }

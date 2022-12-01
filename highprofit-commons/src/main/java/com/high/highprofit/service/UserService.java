@@ -21,4 +21,6 @@ public interface UserService {
     int verify(Integer id, String idCard, String name);
 
     String getUserCount();
+
+    boolean updatePic(Integer id, String headerImage);
 }

@@ -29,7 +29,7 @@ public class Assert {
      * @param message 错误信息
      */
     public static void isFlag(Boolean flag, String message) {
-        if (flag) {
+        if (!flag) {
             throw new ServiceException(message);
         }
     }

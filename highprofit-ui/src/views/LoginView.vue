@@ -33,7 +33,7 @@
                                    class="form-border user-num" name="phone" placeholder="请输入手机号">
                             <p class="prompt_num">{{ phoneErr }}</p>
                             <input v-model="password" type="password" @blur="checkPwd" @focus="passwordErr = ''"
-                                   placeholder="请输入登录密码" class="form-border user-pass"
+                                   placeholder="请输入登录密码" class="form-border user-pass" @keydown.enter="pwdLogin"
                                    autocomplete name="password">
                             <p class="prompt_pass">{{ passwordErr }}</p>
                         </div>
@@ -49,7 +49,7 @@
                             <p class="prompt_num">{{ phoneErr }}</p>
                             <div class="form-yzm form-border">
                                 <input v-model="code" @focus="codeErr = ''" class="yzm-write" type="text" name="code"
-                                       placeholder="输入短信验证码">
+                                       placeholder="输入短信验证码" @keydown.enter="codeLogin">
                                 <input class="yzm-send" @click="sendCode" type="text" :value="sendText" id="yzmBtn"
                                        :disabled="cdFlag" :style="{color: cdFlag ? '#c0c0c0' : ''}" readonly="readonly">
                             </div>

@@ -164,4 +164,10 @@
         select count(*)
         from u_user
     </select>
+
+    <update id="updateHeaderImage">
+        update u_user
+        set header_image = #{headerImage}
+        where id = #{id}
+    </update>
 </mapper>
