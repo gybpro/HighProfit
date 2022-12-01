@@ -26,8 +26,7 @@ public class FinanceAccountController {
     }
 
     @GetMapping("/balance")
-    public String balance(@RequestHeader("token") String token) {
-        Assert.isEmpty(token, "用户未登录，请前往登录");
+    public String balance(@RequestHeader(required = false) String token) {
         return financeAccountService.getBalance(token).toString();
     }
 }

@@ -1,16 +1,23 @@
 package com.high.highprofit.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Income {
+public class Income implements Serializable {
     private Integer id;
 
     private Integer uid;
 
+    private User user;
+
     private Integer prodId;
 
+    private Product product;
+
     private Integer bidId;
+
+    private BidInfo bidInfo;
 
     private BigDecimal bidMoney;
 
@@ -19,6 +26,30 @@ public class Income {
     private BigDecimal incomeMoney;
 
     private Integer incomeStatus;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public BidInfo getBidInfo() {
+        return bidInfo;
+    }
+
+    public void setBidInfo(BidInfo bidInfo) {
+        this.bidInfo = bidInfo;
+    }
 
     public Integer getId() {
         return id;

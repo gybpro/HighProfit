@@ -2,6 +2,8 @@ package com.high.highprofit.mapper;
 
 import com.high.highprofit.bean.Income;
 
+import java.util.List;
+
 public interface IncomeMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface IncomeMapper {
     int updateByPrimaryKeySelective(Income row);
 
     int updateByPrimaryKey(Income row);
+
+    List<Income> selectLatelyRecord(Integer id);
 }

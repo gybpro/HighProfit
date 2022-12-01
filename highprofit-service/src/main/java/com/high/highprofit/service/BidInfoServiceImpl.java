@@ -1,6 +1,10 @@
 package com.high.highprofit.service;
 
+import com.high.highprofit.bean.BidInfo;
+import com.high.highprofit.bean.Product;
+import com.high.highprofit.bean.User;
 import com.high.highprofit.mapper.BidInfoMapper;
+import com.high.highprofit.util.Assert;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -47,5 +51,18 @@ public class BidInfoServiceImpl implements BidInfoService {
             map.put("phone", phone);
         });
         return maps;
+    }
+
+    @Override
+    public List<BidInfo> getLatelyRecord(String token) {
+        User user = (User) redisTemplate.opsForValue().get(token);
+        Assert.isFlag(user != null, "登录超时，请重新登录");
+        Integer id = user.getId();
+        List<BidInfo> bidInfos = bidInfoMapper.selectLatelyRecord(id);
+        if (bidInfos.size() > 0) {
+            Product product = bidInfos.get(0).getProduct();
+            bidInfos.forEach(bidInfo -> bidInfo.setProduct(product));
+        }
+        return bidInfos;
     }
 }

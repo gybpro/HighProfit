@@ -21,4 +21,6 @@ public interface BidInfoMapper {
     int selectTotalMoney();
 
     List<Map<String, Object>> selectTop3();
+
+    List<BidInfo> selectLatelyRecord(Integer id);
 }

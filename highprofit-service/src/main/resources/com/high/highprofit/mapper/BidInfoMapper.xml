@@ -8,6 +8,12 @@
         <result column="bid_money" jdbcType="DECIMAL" property="bidMoney"/>
         <result column="bid_time" jdbcType="TIMESTAMP" property="bidTime"/>
         <result column="bid_status" jdbcType="INTEGER" property="bidStatus"/>
+        <association property="product"
+                     select="com.high.highprofit.mapper.ProductMapper.selectByPrimaryKey"
+                     column="prod_id"/>
+        <association property="user"
+                     select="com.high.highprofit.mapper.UserMapper.selectByPrimaryKey"
+                     column="uid"/>
     </resultMap>
     <sql id="Base_Column_List">
         id
@@ -116,5 +122,12 @@
                            on b.uid = u.id
         group by u.id
         order by money desc limit 3
+    </select>
+
+    <select id="selectLatelyRecord" parameterType="integer" resultMap="BaseResultMap">
+        select bid_money, bid_time, prod_id
+        from b_bid_info
+        where uid = #{id}
+        order by bid_time desc limit 6
     </select>
 </mapper>

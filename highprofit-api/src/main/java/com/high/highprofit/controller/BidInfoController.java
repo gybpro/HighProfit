@@ -1,8 +1,9 @@
 package com.high.highprofit.controller;
 
+import com.high.highprofit.bean.BidInfo;
 import com.high.highprofit.service.BidInfoService;
+import com.high.highprofit.util.Assert;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +35,10 @@ public class BidInfoController {
     @GetMapping("/top3")
     public List<Map<String, Object>> top3() {
         return bidInfoService.getTop3();
+    }
+
+    @GetMapping("/record")
+    public List<BidInfo> record(@RequestHeader(required = false) String token) {
+        return bidInfoService.getLatelyRecord(token);
     }
 }

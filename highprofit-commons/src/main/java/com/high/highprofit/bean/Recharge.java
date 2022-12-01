@@ -1,12 +1,15 @@
 package com.high.highprofit.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Recharge {
+public class Recharge implements Serializable {
     private Integer id;
 
     private Integer uid;
+
+    private User user;
 
     private String rechargeNo;
 
@@ -19,6 +22,14 @@ public class Recharge {
     private String rechargeDesc;
 
     private String channel;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;

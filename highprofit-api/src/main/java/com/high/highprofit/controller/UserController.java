@@ -114,7 +114,7 @@ public class UserController {
     @PostMapping("/verify")
     // public ResultDTO verify(@RequestBody Map<String, String> map,
     public ResultDTO verify(String idCard, String name,
-                            @RequestHeader("token") String token) throws Exception {
+                            @RequestHeader(required = false) String token) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("idcard", idCard);
         params.put("name", name);
@@ -156,7 +156,7 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public ResultDTO logout(@RequestHeader("token") String token) {
+    public ResultDTO logout(@RequestHeader(required = false) String token) {
         ResultDTO resultDTO = new ResultDTO();
         redisTemplate.opsForValue().set(token, "", 0);
         resultDTO.setCode("1");
@@ -171,7 +171,7 @@ public class UserController {
 
     @PostMapping("/upload")
     // MultipartFile传输文件对象
-    public String upload(MultipartFile userPic, @RequestHeader("token") String token) throws IOException {
+    public String upload(MultipartFile userPic, @RequestHeader(required = false) String token) throws IOException {
         User user = (User) redisTemplate.opsForValue().get(token);
         Assert.isFlag(user != null, "用户未登录，请前往登录");
         Integer id = user.getId();

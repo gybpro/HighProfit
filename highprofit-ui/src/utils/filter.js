@@ -1,4 +1,5 @@
 import regExp from "@/utils/regExp";
+import moment from "moment";
 
 const filters = {
     fmtFloat(value) {
@@ -9,6 +10,11 @@ const filters = {
             return value.toFixed(2).replace(regExp.replace.money, ",");
         }
         return value;
+    },
+    fmtDate(date) {
+        if (date) {
+            return moment(date).format("YYYY-MM-DD");
+        }
     }
 };
 

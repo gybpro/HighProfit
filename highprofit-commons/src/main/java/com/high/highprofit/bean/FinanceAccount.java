@@ -1,8 +1,9 @@
 package com.high.highprofit.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class FinanceAccount {
+public class FinanceAccount implements Serializable {
     private Integer id;
 
     private Integer uid;

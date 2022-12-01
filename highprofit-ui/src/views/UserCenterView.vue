@@ -31,7 +31,8 @@
             <div class="user-record-box clearfix">
                 <div class="user-record user-record-1">
                     <h3 class="user-record-title">最近投资</h3>
-                    <table align="center" width="388" border="0" cellspacing="0" cellpadding="0">
+                    <table v-if="bidRecords.length" align="center" width="388" border="0" cellspacing="0"
+                           cellpadding="0">
                         <thead class="datail_thead">
                         <tr>
                             <th>序号</th>
@@ -41,51 +42,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
+                        <tr v-for="(r, i) in bidRecords">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ r.product.productName }}</td>
+                            <td>{{ r.bidMoney }}</td>
+                            <td>{{ r.bidTime | fmtDate }}</td>
                         </tr>
                         </tbody>
                     </table>
                     <!--无记录-->
-                    <p class="user-record-no">还没有投资记录，请投资：<a href="user_center.html" target="_blank">投资</a>
+                    <p v-else class="user-record-no">还没有投资记录，请投资：<a href="user_center.html"
+                                                                              target="_blank">投资</a>
                     </p>
                 </div>
                 <div class="user-record user-record-2">
                     <h3 class="user-record-title">最近充值</h3>
-                    <table align="center" width="388" border="0" cellspacing="0" cellpadding="0">
+                    <table v-if="rechargeRecords.length" align="center" width="388" border="0" cellspacing="0"
+                           cellpadding="0">
                         <thead class="datail_thead">
                         <tr>
                             <th>序号</th>
@@ -95,50 +68,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>新手宝</td>
-                            <td>1500.0</td>
-                            <td>2021-08-19</td>
+                        <tr v-for="(r, i) in rechargeRecords">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ r.rechargeDesc }}</td>
+                            <td>{{ r.rechargeMoney }}</td>
+                            <td>{{ r.rechargeTime | fmtDate }}</td>
                         </tr>
                         </tbody>
                     </table>
                     <!--无记录-->
-                    <p class="user-record-no">还没有充值记录，请充值：<a href="user_pay.html" target="_blank">充值</a></p>
+                    <p v-else class="user-record-no">还没有充值记录，请充值：<a href="user_pay.html"
+                                                                              target="_blank">充值</a></p>
                 </div>
                 <div class="user-record user-record-3">
                     <h3 class="user-record-title ">最近收益</h3>
-                    <table align="center" width="388" border="0" cellspacing="0" cellpadding="0">
+                    <table v-if="incomeRecords.length" align="center" width="388" border="0" cellspacing="0"
+                           cellpadding="0">
                         <thead class="datail_thead">
                         <tr>
                             <th>序号</th>
@@ -148,50 +93,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>新手宝</td>
-                            <td>2021-08-19</td>
-                            <td>0.46</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>新手宝</td>
-                            <td>2021-08-19</td>
-                            <td>0.46</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>新手宝</td>
-                            <td>2021-08-19</td>
-                            <td>0.46</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>新手宝</td>
-                            <td>2021-08-19</td>
-                            <td>0.46</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>新手宝</td>
-                            <td>2021-08-19</td>
-                            <td>0.46</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>新手宝</td>
-                            <td>2021-08-19</td>
-                            <td>0.46</td>
+                        <tr v-for="(r, i) in incomeRecords">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ r.product.productName }}</td>
+                            <td>{{ r.bidInfo.bidTime | fmtDate }}</td>
+                            <td>{{ r.incomeMoney | fmtMoney }}</td>
                         </tr>
                         </tbody>
                     </table>
                     <!--无记录-->
-                    <p class="user-record-no">还没有收益记录</p>
+                    <p v-else class="user-record-no">还没有收益记录</p>
                 </div>
             </div>
         </div>
-
 
         <Footer/>
     </div>
@@ -210,12 +124,30 @@ export default {
         return {
             user: JSON.parse(sessionStorage.getItem("user")),
             accountBalance: 0,
+            bidRecords: "",
+            rechargeRecords: "",
+            incomeRecords: "",
         }
     },
     filters,
     created() {
         Vue.axios.get("/account/balance").then(json => {
             this.accountBalance = json.data;
+        });
+        /*Vue.axios.get("/bidInfo/record").then(json => {
+            if (json.data) {
+                this.bidRecords = json.data;
+            }
+        });
+        Vue.axios.get("/recharge/record").then(json => {
+            if (json.data) {
+                this.rechargeRecords = json.data;
+            }
+        });*/
+        Vue.axios.get("/income/record").then(json => {
+            if (json.data) {
+                this.incomeRecords = json.data;
+            }
         });
     },
     methods: {

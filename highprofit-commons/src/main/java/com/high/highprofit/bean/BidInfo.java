@@ -9,13 +9,36 @@ public class BidInfo implements Serializable {
 
     private Integer prodId;
 
+    private Product product;
+
     private Integer uid;
+
+    private User user;
 
     private BigDecimal bidMoney;
 
     private Date bidTime;
 
     private Integer bidStatus;
+
+    public BidInfo() {
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;

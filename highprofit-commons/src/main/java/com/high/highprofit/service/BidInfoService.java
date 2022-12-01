@@ -1,5 +1,7 @@
 package com.high.highprofit.service;
 
+import com.high.highprofit.bean.BidInfo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +16,6 @@ public interface BidInfoService {
     String getTotalMoney();
 
     List<Map<String, Object>> getTop3();
+
+    List<BidInfo> getLatelyRecord(String token);
 }
