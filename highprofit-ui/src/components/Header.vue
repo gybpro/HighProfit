@@ -16,8 +16,9 @@
                         </div>
                     </li>
                     <li>
-                        <a v-if="!sessionStorage.getItem('user')"><span style="color: #c0c0c0">用户中心</span></a>
-                        <router-link v-else to="/userCenter">用户中心</router-link>
+                        <!--<a v-if="!sessionStorage.getItem('user')"><span style="color: #c0c0c0">用户中心</span></a>-->
+                        <!--<router-link v-else to="/userCenter">用户中心</router-link>-->
+                        <router-link to="/userCenter">用户中心</router-link>
                     </li>
                     <li><a href="javascript:;">信息披露</a></li>
                     <li><a href="javascript:;">安全计划</a></li>
@@ -53,6 +54,7 @@ export default {
                     sessionStorage.removeItem("token");
                     sessionStorage.removeItem("user");
                     alert("退出成功");
+                    // $router用来操作路由，$route用来获取路由信息
                     this.$router.push("/login");
                 } else {
                     alert("系统忙，请稍候重试......");

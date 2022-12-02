@@ -134,7 +134,7 @@ export default {
         Vue.axios.get("/account/balance").then(json => {
             this.accountBalance = json.data;
         });
-        /*Vue.axios.get("/bidInfo/record").then(json => {
+        Vue.axios.get("/bidInfo/record").then(json => {
             if (json.data) {
                 this.bidRecords = json.data;
             }
@@ -143,7 +143,7 @@ export default {
             if (json.data) {
                 this.rechargeRecords = json.data;
             }
-        });*/
+        });
         Vue.axios.get("/income/record").then(json => {
             if (json.data) {
                 this.incomeRecords = json.data;

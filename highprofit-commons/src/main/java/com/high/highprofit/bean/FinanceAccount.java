@@ -1,8 +1,11 @@
 package com.high.highprofit.bean;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FinanceAccount implements Serializable {
     private Integer id;
 

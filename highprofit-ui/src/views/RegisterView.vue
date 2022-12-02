@@ -41,7 +41,8 @@
                         </div>
                     </form>
                     <div class="login-skip">
-                        已有账号？ <router-link to="/login">登录</router-link>
+                        已有账号？
+                        <router-link to="/login">登录</router-link>
                     </div>
                 </div>
             </div>
@@ -116,6 +117,14 @@ export default {
             });
         },
         register() {
+            if (!this.checkPhone()) {
+                alert(this.phoneErr);
+                return;
+            }
+            if (!this.checkPwd()) {
+                alert(this.passwordErr);
+                return;
+            }
             if (this.phone === "") {
                 this.phoneErr = "手机号码不能为空";
                 alert(this.phoneErr);
@@ -131,16 +140,9 @@ export default {
                 alert(this.codeErr);
                 return;
             }
-            if (this.phoneErr !== "") {
-                alert(this.phoneErr);
-                return;
-            }
-            if (this.passwordErr !== "") {
-                alert(this.passwordErr);
-                return;
-            }
             if (this.code !== this.realCode) {
-                alert("验证码错误");
+                this.codeErr = "验证码错误";
+                alert(this.codeErr);
                 return;
             }
             let data = {
@@ -158,25 +160,29 @@ export default {
                 }
             });
         },
-        checkPhone() {
+        async checkPhone() {
             if (this.phone) {
                 if (!regExp.phone.test(this.phone)) {
                     this.phoneErr = "手机号码格式不正确";
+                    return false;
                 } else {
-                    Vue.axios.get("/user/check/" + this.phone)
-                            .then(json => {
-                                if (!json.data) {
-                                    this.phoneErr = "手机号码已被注册";
-                                    this.registered = true;
-                                }
-                            });
+                    let response = await Vue.axios.get("/user/check/" + this.phone);
+                    if (!response.data) {
+                        this.phoneErr = "手机号码已被注册";
+                        this.registered = true;
+                        return false;
+                    }
+                    return true;
                 }
             }
+            return false;
         },
         checkPwd() {
             if (this.password && !regExp.pwd.test(this.password)) {
                 this.passwordErr = "密码格式不正确";
+                return false;
             }
+            return true;
         }
     }
 }

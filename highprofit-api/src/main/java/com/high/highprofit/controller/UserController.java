@@ -111,6 +111,16 @@ public class UserController {
         return loginPostProcess(new ResultDTO(), user);
     }
 
+    @GetMapping("/checkLogin")
+    public ResultDTO checkLogin(@RequestHeader(required = false) String token) {
+        Assert.isEmpty(token, "用户未登录，请前往登录");
+        Assert.isFlag(redisTemplate.opsForValue().get(token) != null, "登录超时，请重新登录");
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode("1");
+        resultDTO.setMessage("已登录，可访问");
+        return resultDTO;
+    }
+
     @PostMapping("/verify")
     // public ResultDTO verify(@RequestBody Map<String, String> map,
     public ResultDTO verify(String idCard, String name,
