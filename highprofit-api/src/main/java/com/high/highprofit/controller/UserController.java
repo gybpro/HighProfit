@@ -228,6 +228,11 @@ public class UserController {
                 // 为客户端分配令牌token
                 // 生成随机令牌
                 String token = UUIDUtil.getUUID().toUpperCase();
+                // 处理用户敏感数据
+                String phone = user.getPhone();
+                phone = phone.substring(0, 3) + "******" + phone.substring(9);
+                user.setPhone(phone);
+                user.setIdCard("yes");
                 // 将令牌存入Redis，后续用户可通过令牌登录
                 redisTemplate.opsForValue().set(token, user, 30, TimeUnit.MINUTES);
                 Map<String, Object> map = new HashMap<>();

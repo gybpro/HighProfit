@@ -43,7 +43,7 @@ const router = new VueRouter({
 });
 
 // 登录才能进入的组件
-let loginName =['userCenter', 'verify'];
+let loginName = ['userCenter', 'verify'];
 
 // 全局导航守卫--验证登录
 router.beforeEach((to, from, next) => {
@@ -53,17 +53,19 @@ router.beforeEach((to, from, next) => {
         let token = sessionStorage.getItem("token");
         if (!token) {
             next({name: "login"});
+        } else {
+            // 向后端请求验证登录状态
+            Vue.axios.get("/user/checkLogin").then(json => {
+                // 有登录状态，则放行，否则跳转登录
+                if (json.data.code === "1") {
+                    next();
+                } else {
+                    sessionStorage.removeItem("token");
+                    alert(json.data.message);
+                    next({name: "login"});
+                }
+            });
         }
-        // 向后端请求验证登录状态
-        Vue.axios.get("/user/checkLogin").then(json => {
-            // 有登录状态，则放行，否则跳转登录
-            if (json.data.code === "1") {
-                next();
-            } else {
-                sessionStorage.removeItem("token");
-                next({name: "login"});
-            }
-        });
     }
     next();
 });

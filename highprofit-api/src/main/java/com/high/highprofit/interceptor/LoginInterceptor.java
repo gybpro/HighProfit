@@ -4,6 +4,7 @@ import com.high.highprofit.bean.User;
 import com.high.highprofit.util.Assert;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if ("options".equalsIgnoreCase(request.getMethod())){
+            return true;
+        }
+
         // 验证token
         String token = request.getHeader("token");
         Assert.isEmpty(token, "用户未登录，请前往登录");

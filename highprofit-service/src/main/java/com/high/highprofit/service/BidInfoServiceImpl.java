@@ -60,8 +60,7 @@ public class BidInfoServiceImpl implements BidInfoService {
         Integer id = user.getId();
         List<BidInfo> bidInfos = bidInfoMapper.selectLatelyRecord(id);
         if (bidInfos.size() > 0) {
-            Product product = bidInfos.get(0).getProduct();
-            bidInfos.forEach(bidInfo -> bidInfo.setProduct(product));
+            bidInfos.forEach(bidInfo -> System.out.println(bidInfo.getProduct()));
         }
         return bidInfos;
     }

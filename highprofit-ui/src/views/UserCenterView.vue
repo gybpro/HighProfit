@@ -45,7 +45,7 @@
                         <tr v-for="(r, i) in bidRecords">
                             <td>{{ i + 1 }}</td>
                             <td>{{ r.product.productName }}</td>
-                            <td>{{ r.bidMoney }}</td>
+                            <td>{{ r.bidMoney | fmtMoney }}</td>
                             <td>{{ r.bidTime | fmtDate }}</td>
                         </tr>
                         </tbody>
@@ -71,7 +71,7 @@
                         <tr v-for="(r, i) in rechargeRecords">
                             <td>{{ i + 1 }}</td>
                             <td>{{ r.rechargeDesc }}</td>
-                            <td>{{ r.rechargeMoney }}</td>
+                            <td>{{ r.rechargeMoney | fmtMoney }}</td>
                             <td>{{ r.rechargeTime | fmtDate }}</td>
                         </tr>
                         </tbody>

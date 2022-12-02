@@ -24,6 +24,17 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
+// 添加响应拦截器，每次响应统一拦截处理
+axios.interceptors.response.use(function (response) {
+    if (response.data.code === "0") {
+        alert(response.data.message);
+    }
+    return response;
+}, function (error) {
+    // 处理响应错误
+    return Promise.reject(error);
+});
+
 // 整合ElementUI
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

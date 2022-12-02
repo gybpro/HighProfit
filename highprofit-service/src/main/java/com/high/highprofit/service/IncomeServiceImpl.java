@@ -35,11 +35,9 @@ public class IncomeServiceImpl implements IncomeService {
         Integer id = user.getId();
         List<Income> incomes = incomeMapper.selectLatelyRecord(id);
         if (incomes.size() > 0) {
-            Product product = incomes.get(0).getProduct();
             incomes.forEach(income -> {
-                income.setProduct(product);
-                BidInfo bidInfo = income.getBidInfo();
-                System.out.println(bidInfo);
+                System.out.println(income.getProduct());
+                System.out.println(income.getBidInfo());
             });
         }
         return incomes;
