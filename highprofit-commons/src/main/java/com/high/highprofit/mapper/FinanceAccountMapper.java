@@ -18,4 +18,6 @@ public interface FinanceAccountMapper {
     int updateByPrimaryKey(FinanceAccount row);
 
     BigDecimal selectAvailableMoneyByUserId(Integer id);
+
+    int updateAvailableMoney(Integer uid, BigDecimal money);
 }

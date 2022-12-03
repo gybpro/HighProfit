@@ -4,7 +4,7 @@
 
         <div class="content clearfix">
             <div class="detail-left">
-                <div class="detail-left-title">新手宝（20210819期）</div>
+                <div class="detail-left-title">{{ product.productName }}（{{ product.productNo }}期）</div>
                 <ul class="detail-left-number">
                     <li>
                         <span>历史年化收益率</span>
@@ -70,9 +70,10 @@
                     <h3 class="detail-right-mode-title">预计本息收入{{ profit | fmtMoney }}（元）</h3>
                     <form id="number_submit">
                         <p>请在下方输入投资金额</p>
-                        <input v-model="bidMoney" @focus="bidMoneyErr = ''" @blur="checkMoney" type="text"
+                        <input type="number" :min="product.bidMinLimit" step="100" :max="product.bidMaxLimit"
+                               @keypress="limitInput" @focus="bidMoneyErr = ''" @blur="checkMoney" v-model="bidMoney"
                                placeholder="请输入日投资金额，应为100元整倍数" name="" class="number-money">
-                        <p>{{ bidMoneyErr }} </p>
+                        <p>{{ bidMoneyErr }}&nbsp; </p>
                         <input type="button" @click="invest" value="立即投资" class="submit-btn">
                     </form>
                 </div>
@@ -108,7 +109,7 @@ export default {
         // 预计收益
         profit() {
             if (!this.bidMoney) return 0;
-            return this.product.rate / 12 * this.product.cycle * this.bidMoney;
+            return this.product.rate / 100 * this.product.cycle / 12 * this.bidMoney;
         }
     },
     created() {
@@ -119,7 +120,9 @@ export default {
         async load() {
             this.bidMoney = "";
 
-            this.accountBalance = (await Vue.axios.get("/account/balance")).data;
+            if (sessionStorage.getItem("user")) {
+                this.accountBalance = (await Vue.axios.get("/account/balance")).data;
+            }
 
             let id = this.$route.query.id;
             this.product = (await Vue.axios.get(`/product/info/${id}`)).data;
@@ -135,11 +138,10 @@ export default {
             }
 
             // 表单验证
-            this.checkMoney();
             if (this.bidMoney === "" || this.bidMoney === 0) {
                 this.bidMoneyErr = "投资金额不能为空";
             }
-            if (!this.bidMoneyErr) {
+            if (this.bidMoneyErr) {
                 alert(this.bidMoneyErr);
                 return;
             }
@@ -147,6 +149,7 @@ export default {
             // 发送请求
             Vue.axios.post(`/bidInfo/invest/${this.product.id}/${this.bidMoney}`).then(response => {
                 if (response.data.code === "1") {
+                    alert("恭喜投资成功");
                     this.load();
                 }
             });
@@ -174,6 +177,12 @@ export default {
             }
             if (this.bidMoney > this.accountBalance) {
                 this.bidMoneyErr = "投资金额不能大于余额";
+            }
+        },
+        limitInput(event) {
+            // 如果不为数字
+            if (isNaN(event.key)) {
+                event.preventDefault();// 阻止默认行为
             }
         }
     }

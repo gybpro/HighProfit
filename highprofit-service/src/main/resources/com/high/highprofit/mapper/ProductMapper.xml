@@ -225,7 +225,7 @@
         from b_product_info
         where product_type = 2
           and product_status = 0
-        order by left_product_money, rate desc
+        order by left_product_money asc, rate desc
         limit 3
     </select>
 
@@ -237,8 +237,14 @@
 
     <select id="selectInfoById" parameterType="integer" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        select rate, cycle, product_money, left_product_money, bid_min_limit, bid_max_limit
         from b_product_info
         where id = #{id}
     </select>
+
+    <update id="updateLeftProductMoney">
+        update b_product_info
+        set left_product_money = left_product_money - #{money}
+        where id = #{id}
+        and left_product_money >= #{money}
+    </update>
 </mapper>

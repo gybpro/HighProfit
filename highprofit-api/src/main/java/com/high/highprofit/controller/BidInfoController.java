@@ -1,6 +1,7 @@
 package com.high.highprofit.controller;
 
 import com.high.highprofit.bean.BidInfo;
+import com.high.highprofit.dto.ResultDTO;
 import com.high.highprofit.service.BidInfoService;
 import com.high.highprofit.util.Assert;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -42,8 +43,23 @@ public class BidInfoController {
         return bidInfoService.getLatelyRecord(token);
     }
 
-    @GetMapping("/record/{id}")
-    public List<BidInfo> record(@PathVariable("id") Integer prodId) {
+    @GetMapping("/record/{prodId}")
+    public List<BidInfo> record(@PathVariable Integer prodId) {
         return bidInfoService.getRecordByProdId(prodId);
+    }
+
+    @PostMapping("invest/{prodId}/{bidMoney}")
+    public ResultDTO invest(@PathVariable Integer prodId,
+                            @PathVariable String bidMoney,
+                            @RequestHeader String token) {
+        ResultDTO resultDTO = new ResultDTO();
+        if (bidInfoService.invest(prodId, bidMoney, token)) {
+            resultDTO.setCode("1");
+            resultDTO.setMessage("投资成功");
+        } else {
+            resultDTO.setCode("0");
+            resultDTO.setMessage("系统异常");
+        }
+        return resultDTO;
     }
 }

@@ -74,4 +74,11 @@
         from u_finance_account
         where uid = #{uid}
     </select>
+
+    <update id="updateAvailableMoney">
+        update u_finance_account
+        set available_money = available_money - #{money}
+        where uid = #{uid}
+        and available_money >= #{money}
+    </update>
 </mapper>

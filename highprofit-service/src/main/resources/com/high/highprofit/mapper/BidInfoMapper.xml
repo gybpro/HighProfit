@@ -132,7 +132,7 @@
     </select>
 
     <select id="selectRecordByProdId" parameterType="integer" resultMap="BaseResultMap">
-        select uid, bid_money, bid_time
+        select id, uid, bid_money, bid_time
         from b_bid_info
         where prod_id = #{prodId}
         order by bid_money desc limit 5

@@ -20,4 +20,6 @@ public interface BidInfoService {
     List<BidInfo> getLatelyRecord(String token);
 
     List<BidInfo> getRecordByProdId(Integer prodId);
+
+    boolean invest(Integer prodId, String bidMoney, String token);
 }
