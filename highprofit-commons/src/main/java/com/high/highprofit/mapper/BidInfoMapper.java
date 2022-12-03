@@ -23,4 +23,6 @@ public interface BidInfoMapper {
     List<Map<String, Object>> selectTop3();
 
     List<BidInfo> selectLatelyRecord(Integer id);
+
+    List<BidInfo> selectRecordByProdId(Integer prodId);
 }

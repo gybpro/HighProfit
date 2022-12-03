@@ -41,4 +41,9 @@ public class BidInfoController {
     public List<BidInfo> record(@RequestHeader(required = false) String token) {
         return bidInfoService.getLatelyRecord(token);
     }
+
+    @GetMapping("/record/{id}")
+    public List<BidInfo> record(@PathVariable("id") Integer prodId) {
+        return bidInfoService.getRecordByProdId(prodId);
+    }
 }

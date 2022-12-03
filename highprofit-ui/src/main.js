@@ -28,6 +28,9 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
     if (response.data.code === "0") {
         alert(response.data.message);
+        if (response.data.message === "用户未登录，请前往登录" || response.data.message === "登录超时，请重新登录") {
+            app.$router.push(`/login?redirectUrl=${this.$route.fullPath}`);
+        }
     }
     return response;
 }, function (error) {
@@ -56,7 +59,7 @@ import '../public/css/user_pay.css'
 
 Vue.config.productionTip = false
 
-new Vue({
+let app = new Vue({
     router,
     render: h => h(App)
 }).$mount('#app')

@@ -26,7 +26,7 @@
         <p class="preferred-select-txt">
             {{ product.productDesc }}
         </p>
-        <a href="javascript:;" target="_blank" class="preferred-select-btn">立即投资</a>
+        <router-link :to="'/detail?id=' + product.id" class="preferred-select-btn">立即投资</router-link>
     </li>
 </template>
 

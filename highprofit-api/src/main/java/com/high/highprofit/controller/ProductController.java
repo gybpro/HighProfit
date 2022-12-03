@@ -51,4 +51,9 @@ public class ProductController {
                               @PathVariable("proType") Integer proType) {
         return productService.pagingQuery(pageNum, pageSize, proType);
     }
+
+    @GetMapping("/info/{id}")
+    public Product info(@PathVariable Integer id) {
+        return productService.getInfoById(id);
+    }
 }

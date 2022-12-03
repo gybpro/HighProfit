@@ -6,7 +6,7 @@
         <div class="login-content">
             <div class="login-flex">
                 <div class="login-left">
-                    <p>万民用户知心托付&nbsp;&nbsp;&nbsp;&nbsp;<Rate/>
+                    <p>万民用户知心托付&nbsp;&nbsp;&nbsp;&nbsp;<Rate/>%
                         历史年化收益
                     </p>
                     <p>千万级技术研发投入&nbsp;&nbsp;&nbsp;&nbsp;亿级注册资本平台 </p>
@@ -98,9 +98,9 @@ export default {
                 return;
             }
             this.cdFlag = true;
-            Vue.axios.get("sms/register/" + this.phone).then(json => {
-                console.log(json.data);
-                this.realCode = json.data + "";
+            Vue.axios.get("sms/register/" + this.phone).then(response => {
+                console.log(response.data);
+                this.realCode = response.data + "";
                 /* 倒计时: 参数1表示定时任务，参数2表示任务多久执行一次
                 setTimeout: 只执行一次
                 setInterval: 多次执行
@@ -153,8 +153,8 @@ export default {
             this.checkPhone();
             this.checkPwd();
             data = qs.stringify(data);
-            Vue.axios.post("user/register", data).then(json => {
-                if (json.data.code === "1") {
+            Vue.axios.post("user/register", data).then(response => {
+                if (response.data.code === "1") {
                     alert("注册成功，请前往登录");
                     this.$router.push("/login");
                 }

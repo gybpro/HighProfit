@@ -234,4 +234,11 @@
         from b_product_info
         where product_type = #{productType}
     </select>
+
+    <select id="selectInfoById" parameterType="integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        select rate, cycle, product_money, left_product_money, bid_min_limit, bid_max_limit
+        from b_product_info
+        where id = #{id}
+    </select>
 </mapper>

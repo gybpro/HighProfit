@@ -1,5 +1,5 @@
 <template>
-    <span>{{ rate | fmtFloat }}%</span>
+    <span>{{ rate | fmtFloat }}</span>
 </template>
 
 <script>

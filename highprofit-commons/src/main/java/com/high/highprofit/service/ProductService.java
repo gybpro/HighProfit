@@ -21,4 +21,6 @@ public interface ProductService {
     List<Product> getScatter();
 
     Object pagingQuery(Integer pageNum, Integer pageSize, Integer proType);
+
+    Product getInfoById(Integer id);
 }

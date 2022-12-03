@@ -18,4 +18,6 @@ public interface BidInfoService {
     List<Map<String, Object>> getTop3();
 
     List<BidInfo> getLatelyRecord(String token);
+
+    List<BidInfo> getRecordByProdId(Integer prodId);
 }

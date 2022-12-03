@@ -21,7 +21,7 @@
             <div class="banner-abs">
                 <div class="banner-abs-box">
                     <div class="banner-abs-title">动力金融网历史年化收益率</div>
-                    <b><Rate/></b>
+                    <b><Rate/>%</b>
                     <p>平台用户数</p>
                     <span><UserCount/> <i>位</i></span>
                     <p class="banner-abs-border">累计成交金额</p>
@@ -79,7 +79,7 @@
                             <span>余利可投资金额</span>
                         </li>
                     </ul>
-                    <a href="details.html" target="_blank" class="new-user-btn">立即投资</a>
+                    <router-link :to="'/detail?id=' + product0.id" class="new-user-btn">立即投资</router-link>
                 </div>
                 <span class="new-tag">新用户专享</span>
             </div>
@@ -160,11 +160,11 @@ export default {
         }
     },
     created() {
-        Vue.axios.get("/product/newUserPro").then(json => this.product0 = json.data);
-        Vue.axios.get("/product/prePro/1").then(json => this.product1 = json.data);
-        Vue.axios.get("/product/prePro/3").then(json => this.product3 = json.data);
-        Vue.axios.get("/product/prePro/6").then(json => this.product6 = json.data);
-        Vue.axios.get("/product/scatter").then(json => this.products = json.data);
+        Vue.axios.get("/product/newUserPro").then(response => this.product0 = response.data);
+        Vue.axios.get("/product/prePro/1").then(response => this.product1 = response.data);
+        Vue.axios.get("/product/prePro/3").then(response => this.product3 = response.data);
+        Vue.axios.get("/product/prePro/6").then(response => this.product6 = response.data);
+        Vue.axios.get("/product/scatter").then(response => this.products = response.data);
     }
 }
 </script>

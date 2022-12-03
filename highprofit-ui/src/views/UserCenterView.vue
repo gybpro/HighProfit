@@ -131,22 +131,22 @@ export default {
     },
     filters,
     created() {
-        Vue.axios.get("/account/balance").then(json => {
-            this.accountBalance = json.data;
+        Vue.axios.get("/account/balance").then(response => {
+            this.accountBalance = response.data;
         });
-        Vue.axios.get("/bidInfo/record").then(json => {
-            if (json.data) {
-                this.bidRecords = json.data;
+        Vue.axios.get("/bidInfo/record").then(response => {
+            if (response.data) {
+                this.bidRecords = response.data;
             }
         });
-        Vue.axios.get("/recharge/record").then(json => {
-            if (json.data) {
-                this.rechargeRecords = json.data;
+        Vue.axios.get("/recharge/record").then(response => {
+            if (response.data) {
+                this.rechargeRecords = response.data;
             }
         });
-        Vue.axios.get("/income/record").then(json => {
-            if (json.data) {
-                this.incomeRecords = json.data;
+        Vue.axios.get("/income/record").then(response => {
+            if (response.data) {
+                this.incomeRecords = response.data;
             }
         });
     },
@@ -154,8 +154,8 @@ export default {
         upload() {
             if (userPic.files.length) {
                 // 文件上传必须用postForm()方法
-                Vue.axios.postForm("/user/upload", {userPic: userPic.files[0]}).then(json => {
-                    this.user.headerImage = json.data;
+                Vue.axios.postForm("/user/upload", {userPic: userPic.files[0]}).then(response => {
+                    this.user.headerImage = response.data;
                     sessionStorage.setItem("user", JSON.stringify(this.user));
                     alert(this.user.headerImage);
                 });

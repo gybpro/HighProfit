@@ -88,4 +88,9 @@ public class ProductServiceImpl implements ProductService{
         }
         return pageInfo;
     }
+
+    @Override
+    public Product getInfoById(Integer id) {
+        return productMapper.selectInfoById(id);
+    }
 }

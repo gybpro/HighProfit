@@ -67,17 +67,17 @@ export default {
                 alert(this.idCardErr);
                 return;
             }
-            Vue.axios.post("/user/verify", `name=${this.name}&idCard=${this.idCard}`).then(json => {
-            // Vue.axios.post("/user/verify", {name: this.name, idCard: this.idCard}).then(json => {
-                if (json.data.code === "1") {
-                    alert(json.data.message);
-                    sessionStorage.setItem("user", JSON.stringify(json.data.result.user));
+            Vue.axios.post("/user/verify", `name=${this.name}&idCard=${this.idCard}`).then(response => {
+            // Vue.axios.post("/user/verify", {name: this.name, idCard: this.idCard}).then(response => {
+                if (response.data.code === "1") {
+                    alert(response.data.message);
+                    sessionStorage.setItem("user", JSON.stringify(response.data.result.user));
                     this.$router.push("/");
-                } else if (json.data.code === "2") {
-                    alert(json.data.message);
+                } else if (response.data.code === "2") {
+                    alert(response.data.message);
                     this.$router.push("/login")
                 } else {
-                    alert(json.data.message);
+                    alert(response.data.message);
                 }
             });
         },

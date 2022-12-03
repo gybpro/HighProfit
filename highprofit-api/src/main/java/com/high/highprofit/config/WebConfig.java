@@ -33,6 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/income/**",
                 "/recharge/**",
                 "/bidInfo/record",
+                "/bidInfo/invest/**",
         };
 
         registry.addInterceptor(loginInterceptor).addPathPatterns(loginPath);

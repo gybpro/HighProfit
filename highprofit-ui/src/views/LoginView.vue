@@ -8,7 +8,7 @@
                 <div class="login-left">
                     <h3>加入动力金融网</h3>
                     <p>坐享
-                        <Rate/>
+                        <Rate/>%
                         历史年化收益
                     </p>
                     <p>平台用户<UserCount/>位 </p>
@@ -120,9 +120,9 @@ export default {
                 return;
             }
             this.cdFlag = true;
-            Vue.axios.get("sms/login/" + this.phone).then(json => {
-                console.log(json.data);
-                this.realCode = json.data + "";
+            Vue.axios.get("sms/login/" + this.phone).then(response => {
+                console.log(response.data);
+                this.realCode = response.data + "";
                 /* 倒计时: 参数1表示定时任务，参数2表示任务多久执行一次
                 setTimeout: 只执行一次
                 setInterval: 多次执行
@@ -140,24 +140,24 @@ export default {
         },
         pwdLogin() {
             if (this.phone && this.password) {
-                Vue.axios.post("/user/pwdLogin", `phone=${this.phone}&password=${this.password}`).then(json => {
-                    if (json.data.code === "1") {
+                Vue.axios.post("/user/pwdLogin", `phone=${this.phone}&password=${this.password}`).then(response => {
+                    if (response.data.code === "1") {
                         // 用sessionStorage会话存储器保存客户端标识(token令牌)
-                        sessionStorage.setItem("token", json.data.result.token);
+                        sessionStorage.setItem("token", response.data.result.token);
                         // sessionStorage仅支持字符串存储，如果需要存储对象，需要将对象先转换为json字符串、
-                        let userStr = JSON.stringify(json.data.result.user);
+                        let userStr = JSON.stringify(response.data.result.user);
                         sessionStorage.setItem("user", userStr);
 
                         // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
-                        let user = json.data.result.user;
+                        let user = response.data.result.user;
                         if (user.name && user.idCard) {
-                            this.$router.push("/");
+                            this.$router.push(this.$route.query.redirectUrl || "/");
                         } else {
                             alert("您尚未实名认证，正在为您跳转实名认证页面");
                             this.$router.push("/verify");
                         }
                     } else {
-                        alert(json.data.message);
+                        alert(response.data.message);
                     }
                 });
             }
@@ -181,16 +181,16 @@ export default {
                 alert(this.passwordErr);
                 return;
             }
-            Vue.axios.post("/user/codeLogin", `phone=${this.phone}&code=${this.code}`).then(json => {
-                if (json.data.code === "1") {
+            Vue.axios.post("/user/codeLogin", `phone=${this.phone}&code=${this.code}`).then(response => {
+                if (response.data.code === "1") {
                     // 用sessionStorage会话存储器保存客户端标识(token令牌)
-                    sessionStorage.setItem("token", json.data.result.token);
+                    sessionStorage.setItem("token", response.data.result.token);
                     // sessionStorage仅支持字符串存储，如果需要存储对象，需要将对象先转换为json字符串、
-                    let userStr = JSON.stringify(json.data.result.user);
+                    let userStr = JSON.stringify(response.data.result.user);
                     sessionStorage.setItem("user", userStr);
 
                     // 登录成功，如果用户已经实名认证，跳转到首页，否则跳转到实名认证页面
-                    let user = json.data.result.user;
+                    let user = response.data.result.user;
                     if (user.name && user.idCard) {
                         this.$router.push("/");
                     } else {
@@ -198,7 +198,7 @@ export default {
                         this.$router.push("/verify");
                     }
                 } else {
-                    alert(json.data.message);
+                    alert(response.data.message);
                 }
             });
         },
@@ -208,8 +208,8 @@ export default {
                     this.phoneErr = "手机号码格式不正确";
                 } else {
                     Vue.axios.get("/user/check/" + this.phone)
-                            .then(json => {
-                                if (json.data) {
+                            .then(response => {
+                                if (response.data) {
                                     this.phoneErr = "手机号码尚未注册";
                                     this.registered = false;
                                 }

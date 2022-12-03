@@ -56,11 +56,27 @@ public class BidInfoServiceImpl implements BidInfoService {
     @Override
     public List<BidInfo> getLatelyRecord(String token) {
         User user = (User) redisTemplate.opsForValue().get(token);
-        Assert.isFlag(user != null, "登录超时，请重新登录");
         Integer id = user.getId();
         List<BidInfo> bidInfos = bidInfoMapper.selectLatelyRecord(id);
         if (bidInfos.size() > 0) {
             bidInfos.forEach(bidInfo -> System.out.println(bidInfo.getProduct()));
+        }
+        return bidInfos;
+    }
+
+    @Override
+    public List<BidInfo> getRecordByProdId(Integer prodId) {
+        List<BidInfo> bidInfos = bidInfoMapper.selectRecordByProdId(prodId);
+        if (bidInfos != null && bidInfos.size() > 0) {
+            bidInfos.forEach(bidInfo -> {
+                User user = bidInfo.getUser();
+                // 处理用户敏感数据
+                String phone = user.getPhone();
+                phone = phone.substring(0, 3) + "******" + phone.substring(9);
+                user = new User();
+                user.setPhone(phone);
+                bidInfo.setUser(user);
+            });
         }
         return bidInfos;
     }

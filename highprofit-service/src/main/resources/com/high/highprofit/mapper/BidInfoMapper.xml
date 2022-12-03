@@ -130,4 +130,11 @@
         where uid = #{id}
         order by bid_time desc limit 6
     </select>
+
+    <select id="selectRecordByProdId" parameterType="integer" resultMap="BaseResultMap">
+        select uid, bid_money, bid_time
+        from b_bid_info
+        where prod_id = #{prodId}
+        order by bid_money desc limit 5
+    </select>
 </mapper>
