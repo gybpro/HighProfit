@@ -15,8 +15,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -146,7 +144,9 @@ public class BidInfoServiceImpl implements BidInfoService {
                 income.setProdId(prodId);
                 BigDecimal recordBidMoney = bidInfo.getBidMoney();
                 income.setBidMoney(recordBidMoney);
-                income.setIncomeDate(nowDate);
+                calendar.add(Calendar.MONTH, product.getCycle());
+                Date incomeDate = calendar.getTime();
+                income.setIncomeDate(incomeDate);
                 Double d = product.getCycle() / 12.0;
                 BigDecimal cycle = new BigDecimal(d.toString());
                 BigDecimal incomeMoney = recordBidMoney

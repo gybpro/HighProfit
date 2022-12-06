@@ -140,8 +140,22 @@
     <select id="selectLatelyRecord" parameterType="integer" resultMap="BaseResultMap">
         select i.prod_id, bid_id, income_money
         from b_income_record i
-        join b_bid_info b on i.bid_id = b.id
+                 join b_bid_info b on i.bid_id = b.id
         where i.uid = #{id}
         order by b.bid_time desc limit 6
     </select>
+
+    <select id="getReturnRecord" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from b_income_record
+        where income_date = #{today}
+        and income_status = 0
+    </select>
+
+    <update id="updateStatus">
+        update b_income_record
+        set income_status = #{incomeStatus}
+        where id = #{id}
+    </update>
 </mapper>

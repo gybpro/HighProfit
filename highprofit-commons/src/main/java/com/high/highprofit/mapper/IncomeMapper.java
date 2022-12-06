@@ -2,6 +2,7 @@ package com.high.highprofit.mapper;
 
 import com.high.highprofit.bean.Income;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface IncomeMapper {
@@ -18,4 +19,8 @@ public interface IncomeMapper {
     int updateByPrimaryKey(Income row);
 
     List<Income> selectLatelyRecord(Integer id);
+
+    List<Income> getReturnRecord(Date today);
+
+    int updateStatus(Integer id, Integer incomeStatus);
 }

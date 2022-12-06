@@ -5,6 +5,20 @@ import router from './router'
 // Vue整合axios
 import axios from "axios";
 import VueAxios from "vue-axios";
+// 整合ElementUI
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+// 导入css文件
+import '../public/css/details.css'
+import '../public/css/font-awesome.min.css'
+import '../public/css/index.css'
+import '../public/css/list.css'
+import '../public/css/login.css'
+import '../public/css/public-head.css'
+import '../public/css/reset.css'
+import '../public/css/swiper.css'
+import '../public/css/user_center.css'
+import '../public/css/user_pay.css'
 
 // Global axios defaults：全局默认设置，axios的默认根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8081';
@@ -29,7 +43,7 @@ axios.interceptors.response.use(function (response) {
     if (response.data.code === "0") {
         alert(response.data.message);
         if (response.data.message === "用户未登录，请前往登录" || response.data.message === "登录超时，请重新登录") {
-            app.$router.push(`/login?redirectUrl=${this.$route.fullPath}`);
+            router.push(`/login?redirectUrl=${router.currentRoute.fullPath}`);
         }
     }
     return response;
@@ -38,24 +52,9 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-// 整合ElementUI
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 Vue.use(VueAxios, axios);
-
-// 导入css文件
-import '../public/css/details.css'
-import '../public/css/font-awesome.min.css'
-import '../public/css/index.css'
-import '../public/css/list.css'
-import '../public/css/login.css'
-import '../public/css/public-head.css'
-import '../public/css/reset.css'
-import '../public/css/swiper.css'
-import '../public/css/user_center.css'
-import '../public/css/user_pay.css'
 
 Vue.config.productionTip = false
 

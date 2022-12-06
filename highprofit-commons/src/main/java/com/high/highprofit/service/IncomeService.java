@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface IncomeService {
     List<Income> getLateLyRecord(String token);
+
+    void returnMoney();
 }

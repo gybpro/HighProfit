@@ -79,6 +79,12 @@
         update u_finance_account
         set available_money = available_money - #{money}
         where uid = #{uid}
-        and available_money >= #{money}
+          and available_money >= #{money}
+    </update>
+
+    <update id="updateAvailableMoneyByReturnMoney">
+        update u_finance_account
+        set available_money = available_money + ${returnMoney}
+        where uid = #{uid}
     </update>
 </mapper>
