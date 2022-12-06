@@ -1,10 +1,8 @@
 package com.high.highprofit.service;
 
-import com.high.highprofit.bean.BidInfo;
 import com.high.highprofit.bean.Recharge;
 import com.high.highprofit.bean.User;
 import com.high.highprofit.mapper.RechargeMapper;
-import com.high.highprofit.util.Assert;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -33,5 +31,10 @@ public class RechargeServiceImpl implements RechargeService{
         User user = (User) redisTemplate.opsForValue().get(token);
         Integer id = user.getId();
         return rechargeMapper.selectLatelyRecord(id);
+    }
+
+    @Override
+    public boolean add(Recharge recharge) {
+        return rechargeMapper.insert(recharge) > 0;
     }
 }

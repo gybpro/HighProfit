@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface RechargeService {
     List<Recharge> getLatelyRecord(String token);
+
+    boolean add(Recharge record);
 }

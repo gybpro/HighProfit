@@ -22,8 +22,8 @@
                     </ul>
                     <div class="user-head-money fr">
                         <p>可用余额：<span>￥{{ accountBalance | fmtMoney }}元</span></p>
-                        <a href="user_pay.html" target="_blank" class="user-head-a1">充值</a>
-                        <a href="details.html" target="_blank" class="user-head-a2">投资</a>
+                        <router-link class="user-head-a1" to="/pay">充值</router-link>
+                        <router-link class="user-head-a2" to="/">投资</router-link>
                     </div>
                 </div>
             </div>

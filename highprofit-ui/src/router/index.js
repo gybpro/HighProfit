@@ -7,37 +7,66 @@ const routes = [
     {
         path: '/',
         name: 'index',
-        component: () => import("@/views/IndexView")
+        component: () => import("@/views/IndexView"),
+        meta: {
+            title: "盈利宝"
+        }
     },
     {
         path: '/login',
         name: 'login',
-        component: () => import("@/views/LoginView")
+        component: () => import("@/views/LoginView"),
+        meta: {
+            title: "登录"
+        }
     },
     {
         path: '/register',
         name: 'register',
-        component: () => import("@/views/RegisterView")
+        component: () => import("@/views/RegisterView"),
+        meta: {
+            title: "注册"
+        }
     },
     {
         path: '/verify',
         name: 'verify',
-        component: () => import("@/views/VerifyView")
+        component: () => import("@/views/VerifyView"),
+        meta: {
+            title: "实名认证"
+        }
     },
     {
         path: '/list/:type', // 动态路由，:type表示一个变量
         name: 'list',
-        component: () => import("@/views/ListView")
+        component: () => import("@/views/ListView"),
+        meta: {
+            title: "产品列表"
+        }
     },
     {
         path: '/userCenter',
         name: 'userCenter',
-        component: () => import("@/views/UserCenterView")
+        component: () => import("@/views/UserCenterView"),
+        meta: {
+            title: "用户中心"
+        }
     },
     {
         path: '/detail',
         name: 'detail',
-        component: () => import("@/views/DetailView")
+        component: () => import("@/views/DetailView"),
+        meta: {
+            title: "产品详情"
+        }
+    },
+    {
+        path: '/pay',
+        name: 'pay',
+        component: () => import("@/views/PayView"),
+        meta: {
+            title: "用户充值"
+        }
     }
 ];
 
